@@ -9,6 +9,7 @@ void write_to_sram(string address, string data);
 char read_from_sram();
 void setDataIn();
 
+//Push Test
 int main(void) {
 	printf("Welcome to the SJOne Board Interface")	
 }
