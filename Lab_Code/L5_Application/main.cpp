@@ -8,29 +8,36 @@ using namespace std;
 void write_to_sram(string address, string data);
 char read_from_sram();
 void setDataIn();
+void pin_setter(char byte);
 
 //Push Test
 int main(void) {
 	printf("Welcome to the SJOne Board Interface")	
 }
 
-void write_to_sram(char *address, char *data)
+void write_to_sram(char address, char data)
 {
-	int a_bits[8];
-	int b_bits[8];
-	//Set Address on SJOne
+	pin_setter(address); //Set Address on SJOne
+
+	//Disable all 373s
 	dir_w.setHigh();
+	bus_en#.setHigh();
 	dataOut_w.setLow();
-	dataIn_w.setLow();
+	dataIn_e#.setHigh();
 	cmd_w.setLow();
 
+	//Pass Address to SRAM
 	bus_e#.setLow();
 	addr_w.setHigh();
+	delay_ms(1); //Allow address to get to SRAM
 	addr_w.setLow();
-	//Set Data Bits on SJOne
+	
+	pin_setter(data); //Set Data Bits on SJOne
 	dataOut_w.setHigh();
-	//Set Command Register Bits
-	//sel_sram=1; w=1;
+	pin_setter(00000000); //Clear cmd register
+	delay_ms(1);
+	pin_setter()
+
 
 }
 string read_from_sram()
@@ -98,11 +105,38 @@ void setGPIOs
 	GPIO  datain_e#(P2_3);
 	GPIO  cmd_w(P2_40);
 }
-void setData(string byte, int* bits)
+
+void pin_setter(char* byte)
 {
-	string data=byte;
-	for(int i=0; i<8;i++)
+	char* bits=byte;
+	int index=7;
+	for(int i=0; i<8; i++)
 	{
-		bits[i]=data[i];
+		bits[i]=atoi(data[index]);
+		index--;
 	}
+	if(bits[0]) a0.setHigh();
+	else a0.setLow();
+
+	if(bits[1]) a1.setHigh();
+	else a1.setLow();
+
+	if(bits[2]) a2.setHigh();
+	else a2.setLow();
+
+	if(bits[3]) a3.setHigh();
+	else a3.setLow();
+
+	if(bits[4]) a4.setHigh();
+	else a4.setLow();
+
+	if(bits[5]) a5.setHigh();
+	else a5.setLow();
+
+	if(bits[6]) a6.setHigh();
+	else a6.setLow();
+
+	if(bits[7]) a7.setHigh();
+	else a7.setLow();
+
 }
