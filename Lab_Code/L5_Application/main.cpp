@@ -4,8 +4,9 @@
 #include "gpio.hpp"
 #include <stdio.h>
 #include <cstring>
+#include <cstdlib>
 #include <string>
-
+using namespace std;
 void write_to_sram(char address[], char data[]);
 void read_from_sram(char address[]);
 void pin_setter(char byte[]);
@@ -29,7 +30,7 @@ GPIO  bus_eL(P0_1);
 GPIO  addr_w(P2_1);
 GPIO  dataOut_w(P2_2);
 GPIO  dataIn_eL(P2_3);
-GPIO  cmd_w(P2_40);
+GPIO  cmd_w(P2_4);
 GPIO clk(P2_6);
 
 int main(void) {
@@ -47,14 +48,14 @@ int main(void) {
 	char selector='0';
 	char address[8]="";
 	char data[8]="";
-	string test="test";
+	string test=="test";
 	while(selector!='e')
 	{
 		printf("Select an option:\n");
 		printf("1) Write to SRAM.\n");
 		printf("2) Read from SRAM.\n");
 		printf("Enter \"e\" to quit.");
-		scanf("%s", selector);
+		scanf('%s', selector);
 
 		if(selector=='1')
 		{
