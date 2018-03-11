@@ -8,9 +8,9 @@
 #include <string>
 #include <iostream>
 using namespace std;
-void write_to_sram(char address[], char data[]);
-void read_from_sram(char address[]);
-void pin_setter(string bits);
+void write_to_sram(string address, string data);
+void read_from_sram(string address);
+void pin_setter(string data);
 int bit_checker(string bits);
 void disable373s();
 void setGPIOs();
@@ -175,9 +175,10 @@ void setAsInput()
 	a7.setAsInput();
 }
 
-void pin_setter(string bits)
+void pin_setter(string data)
 {
 	int index=7;
+	int bits[8]={}; //Sets to 0s
 	for(int i=0; i<8; i++)
 	{
 		bits[i]=atoi(data[index]);
