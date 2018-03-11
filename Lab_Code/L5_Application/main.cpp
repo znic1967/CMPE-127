@@ -48,7 +48,7 @@ int main(void) {
 	char selector='0';
 	char address[8]="";
 	char data[8]="";
-	string test=="test";
+	string test="test";
 	while(selector!='e')
 	{
 		printf("Select an option:\n");
