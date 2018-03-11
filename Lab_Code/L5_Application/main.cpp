@@ -16,6 +16,7 @@ void disable373s();
 void setGPIOs();
 void setAsOutput();
 void setAsInput();
+void toggle_clock(int control);
 
 GPIO  a0(P1_29);
 GPIO  a1(P1_28);
@@ -95,7 +96,7 @@ int main(void) {
 
 }
 
-void write_to_sram(char address[], char data[])
+void write_to_sram(string address, string data)
 {
 	disable373s();
 	setAsOutput();
@@ -174,9 +175,8 @@ void setAsInput()
 	a7.setAsInput();
 }
 
-void pin_setter(string pins)
+void pin_setter(string bits)
 {
-	char bits[8]=byte;
 	int index=7;
 	for(int i=0; i<8; i++)
 	{
