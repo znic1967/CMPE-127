@@ -6,6 +6,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <string>
+#include <iostream>
 using namespace std;
 void write_to_sram(char address[], char data[]);
 void read_from_sram(char address[]);
