@@ -181,7 +181,7 @@ void pin_setter(string data)
 	int bits[8]={}; //Sets to 0s
 	for(int i=0; i<8; i++)
 	{
-		bits[i]=atoi(data[index]);
+		bits[i]=(data[index]-'0');
 		index--;
 	}
 	if(bits[0]) a0.setHigh();
