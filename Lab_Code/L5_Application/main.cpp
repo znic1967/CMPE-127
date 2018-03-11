@@ -14,9 +14,32 @@ void setGPIOs();
 void setAsOutput();
 void setAsInput();
 
+GPIO  a0(P1_29);
+GPIO  a1(P1_28);
+GPIO  a2(P1_23);
+GPIO  a3(P1_22);
+GPIO  a4(P1_20);
+GPIO  a5(P1_19);
+GPIO  a6(P0_30);
+GPIO  a7(P0_29);
+
+GPIO  dir_w(P0_0);
+GPIO  bus_eL(P0_1);
+GPIO  addr_w(P2_1);
+GPIO  dataOut_w(P2_2);
+GPIO  dataIn_eL(P2_3);
+GPIO  cmd_w(P2_40);
+GPIO clk(P2_6);
+
 int main(void) {
 
-	setGPIOs();
+	dir_w.setAsOutput();
+	bus_eL.setAsOutput();
+	addr_w.setAsOutput();
+	dataOut_w.setAsOutput();
+	dataIn_eL.setAsOutput();
+	cmd_w.setAsOutput();
+	clk.setAsOutput();
 	disable373s();
 
 	printf("Welcome to the SJOne Board Interface.\n");
@@ -70,7 +93,6 @@ int main(void) {
 
 void write_to_sram(char address[], char data[])
 {
-	setGPIOs();
 	disable373s();
 	setAsOutput();
 	dir_w.setHigh(); //SJOne->SRAM
@@ -101,7 +123,6 @@ void write_to_sram(char address[], char data[])
 }
 void read_from_sram(char address[])
 {
-	setGPIOs();
 	disable373s();
 	dir_w.setHigh(); //Set as output for commands.
 	pin_setter(address);
@@ -128,34 +149,6 @@ void read_from_sram(char address[])
 	toggle_clock(0);
 
 	printf("Read Operation Complete.\n");
-}
-
-void setGPIOs()
-{
-	GPIO  a0(P1_29);
-	GPIO  a1(P1_28);
-	GPIO  a2(P1_23);
-	GPIO  a3(P1_22);
-	GPIO  a4(P1_20);
-	GPIO  a5(P1_19);
-	GPIO  a6(P0_30);
-	GPIO  a7(P0_29);
-
-	GPIO  dir_w(P0_0);
-	GPIO  bus_eL(P0_1);
-	GPIO  addr_w(P2_1);
-	GPIO  dataOut_w(P2_2);
-	GPIO  dataIn_eL(P2_3);
-	GPIO  cmd_w(P2_40);
-	GPIO clk(P2_6);
-
-	dir_w.setAsOutput();
-	bus_eL.setAsOutput();
-	addr_w.setAsOutput();
-	dataOut_w.setAsOutput();
-	dataIn_eL.setAsOutput();
-	cmd_w.setAsOutput();
-	clk.setAsOutput();
 }
 
 void setAsOutput()
