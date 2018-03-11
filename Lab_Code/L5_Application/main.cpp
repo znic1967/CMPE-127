@@ -2,12 +2,16 @@
 #include "utilities.h"
 #include "io.hpp"
 #include "gpio.hpp"
+#include <stdio.h>
 
 void write_to_sram(char address[], char data[]);
 void read_from_sram(char address[]);
 void pin_setter(char byte[]);
 int bit_checker(char bits[]);
 void disable373s();
+void setGPIOs();
+void setAsOutput();
+void setAsInput();
 
 int main(void) {
 
@@ -16,8 +20,8 @@ int main(void) {
 
 	printf("Welcome to the SJOne Board Interface.\n");
 	char selector='0';
-	char address[8]='0';
-	char data[8]='0';
+	char address[8]='\0';
+	char data[8]='\0';
 	while(selector!='e')
 	{
 		printf("Select an option:\n");
@@ -65,13 +69,14 @@ int main(void) {
 
 void write_to_sram(char address[], char data[])
 {
+	setGPIOs();
 	disable373s();
 	setAsOutput();
 	dir_w.setHigh(); //SJOne->SRAM
 	pin_setter(address); //Set Address on SJOne
 
 	//Pass Address to SRAM
-	bus_e#.setLow();
+	bus_eL.setLow();
 	addr_w.setHigh();
 	delay_ms(1); //Allow address to get to SRAM
 	addr_w.setLow();
@@ -90,17 +95,18 @@ void write_to_sram(char address[], char data[])
 	cmd_w.setHigh(); //Starts the state machine
 	delay_ms(1000); //Let state machine finish
 	toggle_clock(0);
-	
+
 	printf("Write Operation Complete.\n");
 }
 void read_from_sram(char address[])
 {
+	setGPIOs();
 	disable373s();
 	dir_w.setHigh(); //Set as output for commands.
 	pin_setter(address);
 
 	//Pass Address to SRAM
-	bus_e#.setLow();
+	bus_eL.setLow();
 	addr_w.setHigh();
 	delay_ms(1); //Allow address to get to SRAM
 	addr_w.setLow(); //Address latched.
@@ -113,7 +119,7 @@ void read_from_sram(char address[])
 
 	pin_setter(01001000); //Latches cmd register
 	dir_w.setLow(); //SJOne<-SRAM
-	dataIn_e#.setLow();
+	dataIn_eL.setLow();
 
 	toggle_clock(1);
 	cmd_w.setHigh(); //Starts the state machine
@@ -123,7 +129,7 @@ void read_from_sram(char address[])
 	printf("Read Operation Complete.\n");
 }
 
-void setGPIOs
+void setGPIOs()
 {
 	GPIO  a0(P1_29);
 	GPIO  a1(P1_28);
@@ -135,18 +141,18 @@ void setGPIOs
 	GPIO  a7(P0_29);
 
 	GPIO  dir_w(P0_0);
-	GPIO  bus_e#(P0_1);
+	GPIO  bus_eL(P0_1);
 	GPIO  addr_w(P2_1);
 	GPIO  dataOut_w(P2_2);
-	GPIO  dataIn_e#(P2_3);
+	GPIO  dataIn_eL(P2_3);
 	GPIO  cmd_w(P2_40);
 	GPIO clk(P2_6);
 
 	dir_w.setAsOutput();
-	bus_e#.setAsOutput();
+	bus_eL.setAsOutput();
 	addr_w.setAsOutput();
 	dataOut_w.setAsOutput();
-	dataIn_e#.setAsOutput();
+	dataIn_eL.setAsOutput();
 	cmd_w.setAsOutput();
 	clk.setAsOutput();
 }
@@ -231,10 +237,10 @@ void toggle_clock(int control)
 
 void disable373s()
 {
-	bus_en#.setHigh();
+	bus_enL.setHigh();
 	addr_w.setLow();
 	dataOut_w.setLow();
-	dataIn_e#.setHigh();
+	dataIn_eL.setHigh();
 	cmd_w.setLow();
 }
 
