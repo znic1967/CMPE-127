@@ -55,7 +55,7 @@ int main(void) {
 		printf("1) Write to SRAM.\n");
 		printf("2) Read from SRAM.\n");
 		printf("Enter \"e\" to quit.");
-		scanf('%s', selector);
+		cin>>selector;
 
 		if(selector=='1')
 		{
