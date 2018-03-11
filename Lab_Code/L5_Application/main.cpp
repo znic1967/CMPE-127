@@ -99,6 +99,7 @@ int main(void) {
 
 void write_to_sram(string address, string data)
 {
+	string wOp="01000100";
 	disable373s();
 	setAsOutput();
 	dir_w.setHigh(); //SJOne->SRAM
@@ -110,13 +111,9 @@ void write_to_sram(string address, string data)
 	delay_ms(1); //Allow address to get to SRAM
 	addr_w.setLow();
 
-	//Reset state machine
-	pin_setter(00000000);
-	cmd_w.setHigh();
-	delay_ms(1);
-	cmd_w.setLow();
+	smReset();
 
-	pin_setter(01000100); //Latches cmd register
+	pin_setter(wOp); //Latches cmd register
 	pin_setter(data); //Set Data Bits on SJOne
 	dataOut_w.setHigh();
 
@@ -129,6 +126,7 @@ void write_to_sram(string address, string data)
 }
 void read_from_sram(string address)
 {
+	string rOp="01001000";
 	disable373s();
 	dir_w.setHigh(); //Set as output for commands.
 	pin_setter(address);
@@ -139,8 +137,9 @@ void read_from_sram(string address)
 	delay_ms(1); //Allow address to get to SRAM
 	addr_w.setLow(); //Address latched.
 
+	smReset();
 
-	pin_setter(01001000); //Latches cmd register
+	pin_setter(rOp); //Latches cmd register
 	dir_w.setLow(); //SJOne<-SRAM
 	dataIn_eL.setLow();
 
@@ -212,8 +211,7 @@ void pin_setter(string bits)
 int bit_checker(string bits)
 {
 	int counter=0;
-	char str[100]=bits;
-	for(unsigned int i=0; i<(unsigned)strlen(str); i++) counter++;
+	for(unsigned int i=0; i<bits.length(); i++) counter++;
 	if (counter==8) return 1;
 	else return 0;
 }
@@ -231,7 +229,7 @@ void toggle_clock(int control)
 
 void disable373s()
 {
-	bus_enL.setHigh();
+	bus_eL.setHigh();
 	addr_w.setLow();
 	dataOut_w.setLow();
 	dataIn_eL.setHigh();
