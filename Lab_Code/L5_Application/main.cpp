@@ -43,18 +43,18 @@ int main(void) {
 	disable373s();
 
 	printf("Welcome to the SJOne Board Interface.\n");
-	char selector='0';
+	char selector[2]="0";
 	char address[8]="";
 	char data[8]="";
-	while(selector!='e')
+	while(selector!="e")
 	{
 		printf("Select an option:\n");
 		printf("1) Write to SRAM.\n");
 		printf("2) Read from SRAM.\n");
 		printf("Enter \"e\" to quit.");
-		scanf("%c", selector);
+		scanf("%s", selector);
 
-		if(selector=='1')
+		if(selector=="1")
 		{
 			printf("Enter 8-bit Address to write to: ");
 			scanf("%s", address);
@@ -71,7 +71,7 @@ int main(void) {
 			}
 			else printf("Address length not 8 bits.\n");
 		}
-		if (selector=='2')
+		if (selector=="2")
 		{
 			printf("Enter 8-bit Address to read from: ");
 			scanf("%s", address);
@@ -81,7 +81,7 @@ int main(void) {
 			}
 			else printf("Address length not 8 bits.\n");
 		}
-		if (selector!='1'||'2'||'e')
+		if (selector!="1"||"2"||"e")
 		{
 			printf("Enter correct selector value.\n");
 		}
