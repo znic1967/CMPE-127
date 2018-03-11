@@ -10,13 +10,14 @@
 using namespace std;
 void write_to_sram(char address[], char data[]);
 void read_from_sram(char address[]);
-void pin_setter(char byte[]);
-int bit_checker(char bits[]);
+void pin_setter(string bits);
+int bit_checker(string bits);
 void disable373s();
 void setGPIOs();
 void setAsOutput();
 void setAsInput();
 void toggle_clock(int control);
+void smReset();
 
 GPIO  a0(P1_29);
 GPIO  a1(P1_28);
@@ -208,7 +209,7 @@ void pin_setter(string bits)
 	else a7.setLow();
 }
 
-int bit_checker(char bits[])
+int bit_checker(string bits)
 {
 	int counter=0;
 	char str[100]=bits;
