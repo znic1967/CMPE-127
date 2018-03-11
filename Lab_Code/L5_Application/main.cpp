@@ -1,19 +1,20 @@
 #include "tasks.hpp"
 #include "utilities.h"
 #include "io.hpp"
-#include <iostream>
-#include <string>
-using namespace std;
+#include "gpio.hpp"
 
-void write_to_sram(char* address, char* data);
-void read_from_sram(char* address);
-void pin_setter(char byte);
-int bit_checker(char* bits)
+void write_to_sram(char address[], char data[]);
+void read_from_sram(char address[]);
+void pin_setter(char byte[]);
+int bit_checker(char bits[]);
+void disable373s();
 
-//Push Test
 int main(void) {
-	printf("Welcome to the SJOne Board Interface.\n");
+
 	setGPIOs();
+	disable373s();
+
+	printf("Welcome to the SJOne Board Interface.\n");
 	char selector='0';
 	char address[8]='0';
 	char data[8]='0';
@@ -52,22 +53,22 @@ int main(void) {
 			}
 			else printf("Address length not 8 bits.\n");
 		}
+		if (selector!='1'||'2'||'e')
+		{
+			printf("Enter correct selector value.\n");
+		}
 	}
 	printf("SJOne Board Interface Exited.\n");
 	printf("Interface brought to you from countless 4AM SCE wiring wrapping sessions.\n");
 
 }
 
-void write_to_sram(char* address, char* data)
+void write_to_sram(char address[], char data[])
 {
+	disable373s();
+	setAsOutput();
+	dir_w.setHigh(); //SJOne->SRAM
 	pin_setter(address); //Set Address on SJOne
-
-	//Disable all 373s
-	dir_w.setHigh();
-	bus_en#.setHigh();
-	dataOut_w.setLow();
-	dataIn_e#.setHigh();
-	cmd_w.setLow();
 
 	//Pass Address to SRAM
 	bus_e#.setLow();
@@ -84,17 +85,19 @@ void write_to_sram(char* address, char* data)
 	pin_setter(01000100); //Latches cmd register
 	pin_setter(data); //Set Data Bits on SJOne
 	dataOut_w.setHigh();
+
+	toggle_clock(1);
 	cmd_w.setHigh(); //Starts the state machine
+	delay_ms(1000); //Let state machine finish
+	toggle_clock(0);
+	
 	printf("Write Operation Complete.\n");
 }
-void read_from_sram(char address)
+void read_from_sram(char address[])
 {
-	//Disable all 373s
-	dir_w.setHigh();
-	bus_en#.setHigh();
-	dataOut_w.setLow();
-	dataIn_e#.setHigh();
-	cmd_w.setLow();
+	disable373s();
+	dir_w.setHigh(); //Set as output for commands.
+	pin_setter(address);
 
 	//Pass Address to SRAM
 	bus_e#.setLow();
@@ -109,8 +112,14 @@ void read_from_sram(char address)
 	cmd_w.setLow();
 
 	pin_setter(01001000); //Latches cmd register
+	dir_w.setLow(); //SJOne<-SRAM
 	dataIn_e#.setLow();
+
+	toggle_clock(1);
 	cmd_w.setHigh(); //Starts the state machine
+	delay_ms(1000); //Let state machine finish
+	toggle_clock(0);
+
 	printf("Read Operation Complete.\n");
 }
 
@@ -131,11 +140,44 @@ void setGPIOs
 	GPIO  dataOut_w(P2_2);
 	GPIO  dataIn_e#(P2_3);
 	GPIO  cmd_w(P2_40);
+	GPIO clk(P2_6);
+
+	dir_w.setAsOutput();
+	bus_e#.setAsOutput();
+	addr_w.setAsOutput();
+	dataOut_w.setAsOutput();
+	dataIn_e#.setAsOutput();
+	cmd_w.setAsOutput();
+	clk.setAsOutput();
 }
 
-void pin_setter(char* byte)
+void setAsOutput()
 {
-	char* bits=byte;
+	a0.setAsOutput();
+	a1.setAsOutput();
+	a2.setAsOutput();
+	a3.setAsOutput();
+	a4.setAsOutput();
+	a5.setAsOutput();
+	a6.setAsOutput();
+	a7.setAsOutput();
+}
+
+void setAsInput()
+{
+	a0.setAsInput();
+	a1.setAsInput();
+	a2.setAsInput();
+	a3.setAsInput();
+	a4.setAsInput();
+	a5.setAsInput();
+	a6.setAsInput();
+	a7.setAsInput();
+}
+
+void pin_setter(char byte[])
+{
+	char bits[8]=byte;
 	int index=7;
 	for(int i=0; i<8; i++)
 	{
@@ -167,11 +209,32 @@ void pin_setter(char* byte)
 	else a7.setLow();
 }
 
-int bit_checker(char* bits)
+int bit_checker(char bits[])
 {
 	int counter=0;
-	char str[100]=*bits;
+	char str[100]=bits;
 	for(int i=0; i<(unsigned)strlen(str); i++) counter++;
 	if (counter==8) return 1;
 	else return 0;
 }
+
+void toggle_clock(int control)
+{
+		while(control==1)
+		{
+			clk.setHigh();
+			delay_ms(100);
+			clk.setLow();
+		}
+	}
+}
+
+void disable373s()
+{
+	bus_en#.setHigh();
+	addr_w.setLow();
+	dataOut_w.setLow();
+	dataIn_e#.setHigh();
+	cmd_w.setLow();
+}
+
