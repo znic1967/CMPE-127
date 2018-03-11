@@ -4,7 +4,7 @@
 #include "gpio.hpp"
 #include <stdio.h>
 #include <cstring>
-#include <string.h>
+#include <string>
 
 void write_to_sram(char address[], char data[]);
 void read_from_sram(char address[]);
