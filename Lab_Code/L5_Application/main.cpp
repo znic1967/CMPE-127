@@ -125,7 +125,7 @@ void write_to_sram(char address[], char data[])
 
 	printf("Write Operation Complete.\n");
 }
-void read_from_sram(char address[])
+void read_from_sram(string address)
 {
 	disable373s();
 	dir_w.setHigh(); //Set as output for commands.
@@ -137,11 +137,6 @@ void read_from_sram(char address[])
 	delay_ms(1); //Allow address to get to SRAM
 	addr_w.setLow(); //Address latched.
 
-	//Reset state machine
-	pin_setter(00000000);
-	cmd_w.setHigh();
-	delay_ms(1);
-	cmd_w.setLow();
 
 	pin_setter(01001000); //Latches cmd register
 	dir_w.setLow(); //SJOne<-SRAM
@@ -179,7 +174,7 @@ void setAsInput()
 	a7.setAsInput();
 }
 
-void pin_setter(char byte[])
+void pin_setter(string pins)
 {
 	char bits[8]=byte;
 	int index=7;
@@ -242,3 +237,12 @@ void disable373s()
 	cmd_w.setLow();
 }
 
+void smReset()
+{
+	string pins="00000000";
+	//Reset state machine
+	pin_setter(pins);
+	cmd_w.setHigh();
+	delay_ms(1);
+	cmd_w.setLow();
+}
