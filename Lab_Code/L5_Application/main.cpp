@@ -3,6 +3,7 @@
 #include "io.hpp"
 #include "gpio.hpp"
 #include <stdio.h>
+#include <cstring>
 
 void write_to_sram(char address[], char data[]);
 void read_from_sram(char address[]);
@@ -20,8 +21,8 @@ int main(void) {
 
 	printf("Welcome to the SJOne Board Interface.\n");
 	char selector='0';
-	char address[8]='\0';
-	char data[8]='\0';
+	char address[8]="";
+	char data[8]="";
 	while(selector!='e')
 	{
 		printf("Select an option:\n");
