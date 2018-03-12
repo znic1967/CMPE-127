@@ -249,8 +249,8 @@ void pin_setter(string data)
 	} 
 	if(bits[1])
 	{
-		cout<<"A1: 1"<<endl;
-		//a1.setHigh();
+		//cout<<"A1: 1"<<endl;
+		a1.setHigh();
 	} 
 	else
 	{
@@ -259,8 +259,8 @@ void pin_setter(string data)
 	}
 	if(bits[2])
 	{
-		cout<<"A2: 1"<<endl;
-		//a2.setHigh();
+		//cout<<"A2: 1"<<endl;
+		a2.setHigh();
 	} 
 	else
 	{
@@ -274,8 +274,8 @@ void pin_setter(string data)
 	} 
 	else
 	{
-		//a3.setLow();
-		cout<<"A3: 0"<<endl;
+		a3.setLow();
+		//cout<<"A3: 0"<<endl;
 	}
 	if(bits[4])
 	{
