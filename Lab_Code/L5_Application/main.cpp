@@ -116,7 +116,7 @@ void write_to_sram(string address, string data)
 	pin_setter(wOp); //Latches cmd register
 	pin_setter(data); //Set Data Bits on SJOne
 	dataOut_w.setHigh();
-
+	cout<<"Here"<<endl;
 	toggle_clock(1);
 	cmd_w.setHigh(); //Starts the state machine
 	delay_ms(1000); //Let state machine finish
