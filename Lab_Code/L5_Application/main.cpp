@@ -47,12 +47,10 @@ int main(void) {
 	cmd_w.setAsOutput();
 	clk.setAsOutput();
 	disable373s();
-	cout<<"Test Shit"<<endl;
 	printf("Welcome to the SJOne Board Interface.\n");
 	char selector='0';
 	string address="";
 	string data="";
-	string test="test";
 	while(selector!='e')
 	{
 		printf("Select an option:\n");
@@ -180,11 +178,15 @@ void read_from_sram(string address)
 
 	smReset();
 
-	pin_setter(rOp); //Latches cmd register
+	pin_setter(rOp); 
+	cmd_w.setHigh();
+	delay_ms(1);
+	cmd_w.setLow();//Latches cmd register. 
+	//State machine doesn't start until clock toggle.
+
 	dir_w.setLow(); //SJOne<-SRAM
 	dataIn_eL.setLow();
 	setAsInput();
-	cmd_w.setHigh();
 
 	clk.setLow();
 	delay_ms(100);
