@@ -109,6 +109,7 @@ void write_to_sram(string address, string data)
 	disable373s();
 	setAsOutput();
 	dir_w.setHigh(); //SJOne->SRAM
+
 	cout<<"Setting Address"<<endl;
 	pin_setter(address); //Set Address on SJOne
 
@@ -130,34 +131,34 @@ void write_to_sram(string address, string data)
 	cmd_w.setHigh(); //Starts the state machine
 
 	clk.setLow();
-	delay_ms(1);
+	delay_ms(100);
 	clk.setHigh();
-	delay_ms(1);
+	delay_ms(100); //1
 
 	clk.setLow();
-	delay_ms(1);
+	delay_ms(100);
 	clk.setHigh();
-	delay_ms(1);
+	delay_ms(100); //2
 
 	clk.setLow();
-	delay_ms(1);
+	delay_ms(100);
 	clk.setHigh();
-	delay_ms(1);
+	delay_ms(100); //3
 
 	clk.setLow();
-	delay_ms(1);
+	delay_ms(100);
 	clk.setHigh();
-	delay_ms(1);
+	delay_ms(100); //4
 
 	clk.setLow();
-	delay_ms(1);
+	delay_ms(100);
 	clk.setHigh();
-	delay_ms(1);
+	delay_ms(100); //5
 
 	clk.setLow();
-	delay_ms(1);
+	delay_ms(100);
 	clk.setHigh();
-	delay_ms(1);
+	delay_ms(100);
 
 	printf("Write Operation Complete.\n");
 }
@@ -181,8 +182,8 @@ void read_from_sram(string address)
 	pin_setter(rOp); //Latches cmd register
 	dir_w.setLow(); //SJOne<-SRAM
 	dataIn_eL.setLow();
-
 	setAsInput();
+	
 	cmd_w.setHigh(); //Starts the state machine
 	clk.setHigh();
 	clk.setLow();
