@@ -183,7 +183,7 @@ void read_from_sram(string address)
 	dir_w.setLow(); //SJOne<-SRAM
 	dataIn_eL.setLow();
 	setAsInput();
-	cmd.setHigh();
+	cmd_w.setHigh();
 
 	clk.setLow();
 	delay_ms(100);
@@ -214,7 +214,7 @@ void read_from_sram(string address)
 	delay_ms(100);
 	clk.setHigh();
 	delay_ms(100);
-	
+
 	rGPIO(); //Prints GPIO Data
 	printf("Read Operation Complete.\n");
 }
