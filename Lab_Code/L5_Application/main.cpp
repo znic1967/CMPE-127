@@ -90,7 +90,7 @@ int main(void) {
 			}
 			else printf("Address length not 8 bits.\n");
 		}
-		if ((selector!='1')||(selector!='2')||(selector!='e')
+		if ((selector!='1')||(selector!='2')||(selector!='e'))
 		{
 			printf("Enter correct selector value.\n");
 		}
