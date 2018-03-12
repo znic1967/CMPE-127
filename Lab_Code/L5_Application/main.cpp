@@ -90,10 +90,7 @@ int main(void) {
 			}
 			else printf("Address length not 8 bits.\n");
 		}
-		if ((selector!='1')||(selector!='2')||(selector!='e'))
-		{
-			printf("Enter correct selector value.\n");
-		}
+		else cout<<"Choose the right selector"<<endl;
 	}
 	printf("SJOne Board Interface Exited.\n");
 	printf("Interface brought to you from countless 4AM SCE wiring wrapping sessions.\n");
