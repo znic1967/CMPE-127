@@ -176,7 +176,7 @@ void read_from_sram(string address)
 	delay_ms(1); //Allow address to get to SRAM
 	addr_w.setLow(); //Address latched.
 
-	smReset();
+	smReset(); //Resets 164
 
 	pin_setter(rOp); 
 	cmd_w.setHigh();
@@ -184,9 +184,13 @@ void read_from_sram(string address)
 	cmd_w.setLow();//Latches cmd register. 
 	//State machine doesn't start until clock toggle.
 
+	bus_eL.setHigh();
+
 	dir_w.setLow(); //SJOne<-SRAM
 	dataIn_eL.setLow();
 	setAsInput();
+
+	bus_eL.setLow();
 
 	clk.setLow();
 	delay_ms(100);
