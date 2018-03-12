@@ -105,6 +105,7 @@ void write_to_sram(string address, string data)
 	disable373s();
 	setAsOutput();
 	dir_w.setHigh(); //SJOne->SRAM
+	cout<<"Setting Address"<<endl;
 	pin_setter(address); //Set Address on SJOne
 
 	//Pass Address to SRAM
@@ -112,15 +113,18 @@ void write_to_sram(string address, string data)
 	addr_w.setHigh();
 	delay_ms(1); //Allow address to get to SRAM
 	addr_w.setLow();
+	cout<<"Address Latched."<<endl;
 
 	smReset();
-
-	pin_setter(wOp); //Latches cmd register
+	cout<<"Setting Data"<<endl;
 	pin_setter(data); //Set Data Bits on SJOne
 	dataOut_w.setHigh();
-	cout<<"Here"<<endl;
-	
+	delay_ms(100);
+	dataOut_w.setLow();
+	cout<<"Sending State Machine Command"<<endl;
+	pin_setter(wOp); //Latches cmd register
 	cmd_w.setHigh(); //Starts the state machine
+	
 	clk.setHigh();
 	clk.setLow();
 	delay_ms(1000);
@@ -166,6 +170,7 @@ void read_from_sram(string address)
 	dir_w.setLow(); //SJOne<-SRAM
 	dataIn_eL.setLow();
 
+	setAsInput();
 	cmd_w.setHigh(); //Starts the state machine
 	clk.setHigh();
 	clk.setLow();
@@ -226,29 +231,86 @@ void pin_setter(string data)
 		bits[i]=(data[index]-'0');
 		index--;
 	}
-	if(bits[0]) a0.setHigh();
-	else a0.setLow();
-
-	if(bits[1]) a1.setHigh();
-	else a1.setLow();
-
-	if(bits[2]) a2.setHigh();
-	else a2.setLow();
-
-	if(bits[3]) a3.setHigh();
-	else a3.setLow();
-
-	if(bits[4]) a4.setHigh();
-	else a4.setLow();
-
-	if(bits[5]) a5.setHigh();
-	else a5.setLow();
-
-	if(bits[6]) a6.setHigh();
-	else a6.setLow();
-
-	if(bits[7]) a7.setHigh();
-	else a7.setLow();
+	if(bits[0])
+	{
+		a0.setHigh();
+		cout<<"A0: 1"<<endl;
+	} 
+	else
+	{
+		a0.setLow();
+		cout<<"A0: 0"<<endl;
+	} 
+	if(bits[1])
+	{
+		cout<<"A1: 1"<<endl;
+		a1.setHigh();
+	} 
+	else
+	{
+		a1.setLow();
+		cout<<"A1: 0"<<endl;
+	}
+	if(bits[2])
+	{
+		cout<<"A2: 1"<<endl;
+		a2.setHigh();
+	} 
+	else
+	{
+		a2.setLow();
+		cout<<"A2: 0"<<endl;
+	}
+	if(bits[3])
+	{
+		cout<<"A3: 1"<<endl;
+		a3.setHigh();
+	} 
+	else
+	{
+		a3.setLow();
+		cout<<"A3: 0"<<endl;
+	}
+	if(bits[4])
+	{
+		cout<<"A4: 1"<<endl;
+		a4.setHigh();
+	} 
+	else
+	{
+		a4.setLow();
+		cout<<"A4: 0"<<endl;
+	}
+	if(bits[5])
+	{
+		cout<<"A5: 1"<<endl;
+		a5.setHigh();
+	} 
+	else
+	{
+		a5.setLow();
+		cout<<"A5: 0"<<endl;
+	}
+	if(bits[6])
+	{
+		cout<<"A6: 1"<<endl;
+		a6.setHigh();
+	} 
+	else
+	{
+		a6.setLow();
+		cout<<"A6: 0"<<endl;
+	}
+	if(bits[7])
+	{
+		cout<<"A7: 1"<<endl;
+		a7.setHigh();
+	} 
+	else
+	{
+		a7.setLow();
+		cout<<"A7: 0"<<endl;
+	}
 }
 
 int bit_checker(string bits)
