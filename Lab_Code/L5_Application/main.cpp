@@ -57,18 +57,20 @@ int main(void) {
 		printf("Select an option:\n");
 		printf("1) Write to SRAM.\n");
 		printf("2) Read from SRAM.\n");
-		printf("Enter \"e\" to quit.");
+		printf("Enter \"e\" to quit.\n");
 		cin>>selector;
 
 		if(selector=='1')
 		{
 			printf("Enter 8-bit Address to write to: ");
-			scanf("%s", address);
+			cin>>address;
+			cout<<endl;
 			if(bit_checker(address)) 
 			{
 
 				printf("Enter 8-bit data to write: ");
-				scanf("%s",data);
+				cin>>data;
+				cout<<endl;
 				if(bit_checker(data))
 				{
 					write_to_sram(address, data);
@@ -120,6 +122,7 @@ void write_to_sram(string address, string data)
 	toggle_clock(1);
 	cmd_w.setHigh(); //Starts the state machine
 	delay_ms(1000); //Let state machine finish
+	cout<<"Here 2"<<endl;
 	toggle_clock(0);
 
 	printf("Write Operation Complete.\n");
