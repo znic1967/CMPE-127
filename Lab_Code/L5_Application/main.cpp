@@ -74,6 +74,7 @@ int main(void) {
 				cout<<endl;
 				if(bit_checker(data))
 				{
+					cout<<"Writing to data <"<<data<<"> to address <"<<address<<">."<<endl;
 					write_to_sram(address, data);
 				}
 				else printf("Data length not 8 bits.\n");
@@ -116,11 +117,11 @@ void write_to_sram(string address, string data)
 	//Pass Address to SRAM
 	bus_eL.setLow();
 	addr_w.setHigh();
-	delay_ms(1); //Allow address to get to SRAM
+	delay_ms(10); //Allow address to get to SRAM
 	addr_w.setLow();
 	cout<<"Address Latched."<<endl;
 
-	smReset();
+	smReset(); //Set sel_sram to 0 to clear 164
 	cout<<"Setting Data."<<endl;
 	pin_setter(data); //Set Data Bits on SJOne
 	dataOut_w.setHigh();
@@ -357,7 +358,7 @@ void smReset()
 	//Reset state machine
 	pin_setter(pins);
 	cmd_w.setHigh();
-	delay_ms(1);
+	delay_ms(10);
 	cmd_w.setLow();
 }
 void rGPIO()
