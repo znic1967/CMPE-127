@@ -50,7 +50,8 @@ obj/L5_Application/main.o: L5_Application/main.cpp \
  /home/znic1967/SJSU-Dev/firmware/lib/L4_IO/LED.hpp \
  /home/znic1967/SJSU-Dev/firmware/lib/L4_IO/light_sensor.hpp \
  /home/znic1967/SJSU-Dev/firmware/lib/L4_IO/switches.hpp \
- /home/znic1967/SJSU-Dev/firmware/lib/L4_IO/temperature_sensor.hpp
+ /home/znic1967/SJSU-Dev/firmware/lib/L4_IO/temperature_sensor.hpp \
+ /home/znic1967/SJSU-Dev/firmware/lib/L4_IO/gpio.hpp
 
 /home/znic1967/SJSU-Dev/firmware/lib/L5_HighLevel/tasks.hpp:
 
@@ -155,3 +156,5 @@ obj/L5_Application/main.o: L5_Application/main.cpp \
 /home/znic1967/SJSU-Dev/firmware/lib/L4_IO/switches.hpp:
 
 /home/znic1967/SJSU-Dev/firmware/lib/L4_IO/temperature_sensor.hpp:
+
+/home/znic1967/SJSU-Dev/firmware/lib/L4_IO/gpio.hpp:
