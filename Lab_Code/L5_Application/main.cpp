@@ -18,6 +18,7 @@ void setAsOutput();
 void setAsInput();
 void toggle_clock(int control);
 void smReset();
+void rGPIO();
 
 GPIO  a0(P1_29);
 GPIO  a1(P1_28);
@@ -89,13 +90,18 @@ int main(void) {
 			}
 			else printf("Address length not 8 bits.\n");
 		}
-		if (selector!='1'||'2'||'e')
+		if (selector!='1'||selector!='2'||selector!='e')
 		{
 			printf("Enter correct selector value.\n");
 		}
 	}
 	printf("SJOne Board Interface Exited.\n");
 	printf("Interface brought to you from countless 4AM SCE wiring wrapping sessions.\n");
+	cout<<"Hit reset button to restart program."<<endl;
+	while(1)
+	{
+		delay_ms(1000);
+	}
 
 }
 
@@ -124,7 +130,7 @@ void write_to_sram(string address, string data)
 	cout<<"Sending State Machine Command"<<endl;
 	pin_setter(wOp); //Latches cmd register
 	cmd_w.setHigh(); //Starts the state machine
-	
+
 	clk.setHigh();
 	clk.setLow();
 	delay_ms(1000);
@@ -156,6 +162,8 @@ void read_from_sram(string address)
 	string rOp="01001000";
 	disable373s();
 	dir_w.setHigh(); //Set as output for commands.
+	setAsOutput();
+	cout<<"Reading from address: "<<address<<""<<endl;
 	pin_setter(address);
 
 	//Pass Address to SRAM
@@ -195,6 +203,7 @@ void read_from_sram(string address)
 	clk.setHigh();
 	clk.setLow();
 	delay_ms(1000);
+	rGPIO(); //Prints GPIO Data
 	printf("Read Operation Complete.\n");
 }
 
@@ -234,82 +243,82 @@ void pin_setter(string data)
 	if(bits[0])
 	{
 		a0.setHigh();
-		cout<<"A0: 1"<<endl;
+		//cout<<"A0: 1"<<endl;
 	} 
 	else
 	{
 		a0.setLow();
-		cout<<"A0: 0"<<endl;
+		//cout<<"A0: 0"<<endl;
 	} 
 	if(bits[1])
 	{
 		cout<<"A1: 1"<<endl;
-		a1.setHigh();
+		//a1.setHigh();
 	} 
 	else
 	{
 		a1.setLow();
-		cout<<"A1: 0"<<endl;
+		//cout<<"A1: 0"<<endl;
 	}
 	if(bits[2])
 	{
 		cout<<"A2: 1"<<endl;
-		a2.setHigh();
+		//a2.setHigh();
 	} 
 	else
 	{
 		a2.setLow();
-		cout<<"A2: 0"<<endl;
+		//cout<<"A2: 0"<<endl;
 	}
 	if(bits[3])
 	{
-		cout<<"A3: 1"<<endl;
+		//cout<<"A3: 1"<<endl;
 		a3.setHigh();
 	} 
 	else
 	{
-		a3.setLow();
+		//a3.setLow();
 		cout<<"A3: 0"<<endl;
 	}
 	if(bits[4])
 	{
-		cout<<"A4: 1"<<endl;
+		//cout<<"A4: 1"<<endl;
 		a4.setHigh();
 	} 
 	else
 	{
 		a4.setLow();
-		cout<<"A4: 0"<<endl;
+		//cout<<"A4: 0"<<endl;
 	}
 	if(bits[5])
 	{
-		cout<<"A5: 1"<<endl;
+		//cout<<"A5: 1"<<endl;
 		a5.setHigh();
 	} 
 	else
 	{
 		a5.setLow();
-		cout<<"A5: 0"<<endl;
+		//cout<<"A5: 0"<<endl;
 	}
 	if(bits[6])
 	{
-		cout<<"A6: 1"<<endl;
+		//cout<<"A6: 1"<<endl;
 		a6.setHigh();
 	} 
 	else
 	{
 		a6.setLow();
-		cout<<"A6: 0"<<endl;
+		//cout<<"A6: 0"<<endl;
 	}
 	if(bits[7])
 	{
-		cout<<"A7: 1"<<endl;
+		//cout<<"A7: 1"<<endl;
 		a7.setHigh();
 	} 
 	else
 	{
 		a7.setLow();
-		cout<<"A7: 0"<<endl;
+		//cout<<"A7: 0"<<endl;
 	}
 }
 
@@ -349,4 +358,8 @@ void smReset()
 	cmd_w.setHigh();
 	delay_ms(1);
 	cmd_w.setLow();
+}
+void rGPIO()
+{
+	cout<<"Data: "<<a7.read()<<a6.read()<<a5.read()<<a4.read()<<a3.read()<<a2.read()<<a1.read()<<a0.read()<<endl;
 }
