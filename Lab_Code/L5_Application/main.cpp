@@ -46,7 +46,7 @@ int main(void) {
 	cmd_w.setAsOutput();
 	clk.setAsOutput();
 	disable373s();
-
+	cout<<"Test Shit"<<endl;
 	printf("Welcome to the SJOne Board Interface.\n");
 	char selector='0';
 	char address[8]="";
