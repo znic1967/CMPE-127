@@ -84,6 +84,7 @@ int main(void) {
 		{
 			printf("Enter 8-bit Address to read from: ");
 			scanf("%s", address);
+			cout<<endl;
 			if(bit_checker(address)) 
 			{
 				read_from_sram(address);
@@ -128,29 +129,35 @@ void write_to_sram(string address, string data)
 	pin_setter(wOp); //Latches cmd register
 	cmd_w.setHigh(); //Starts the state machine
 
-	clk.setHigh();
 	clk.setLow();
-	delay_ms(1000);
+	delay_ms(1);
+	clk.setHigh();
+	delay_ms(1);
 
-	clk.setHigh();
 	clk.setLow();
-	delay_ms(1000);
+	delay_ms(1);
+	clk.setHigh();
+	delay_ms(1);
 
-	clk.setHigh();
 	clk.setLow();
-	delay_ms(1000);
+	delay_ms(1);
+	clk.setHigh();
+	delay_ms(1);
 
-	clk.setHigh();
 	clk.setLow();
-	delay_ms(1000);
+	delay_ms(1);
+	clk.setHigh();
+	delay_ms(1);
 
-	clk.setHigh();
 	clk.setLow();
-	delay_ms(1000);
+	delay_ms(1);
+	clk.setHigh();
+	delay_ms(1);
 
-	clk.setHigh();
 	clk.setLow();
-	delay_ms(1000);
+	delay_ms(1);
+	clk.setHigh();
+	delay_ms(1);
 
 	printf("Write Operation Complete.\n");
 }
@@ -179,27 +186,27 @@ void read_from_sram(string address)
 	cmd_w.setHigh(); //Starts the state machine
 	clk.setHigh();
 	clk.setLow();
-	delay_ms(1000);
+	delay_ms(10);
 
 	clk.setHigh();
 	clk.setLow();
-	delay_ms(1000);
+	delay_ms(10);
 
 	clk.setHigh();
 	clk.setLow();
-	delay_ms(1000);
+	delay_ms(10);
 
 	clk.setHigh();
 	clk.setLow();
-	delay_ms(1000);
+	delay_ms(10);
 
 	clk.setHigh();
 	clk.setLow();
-	delay_ms(1000);
+	delay_ms(10);
 
 	clk.setHigh();
 	clk.setLow();
-	delay_ms(1000);
+	delay_ms(10);
 	rGPIO(); //Prints GPIO Data
 	printf("Read Operation Complete.\n");
 }
@@ -325,17 +332,6 @@ int bit_checker(string bits)
 	for(unsigned int i=0; i<bits.length(); i++) counter++;
 	if (counter==8) return 1;
 	else return 0;
-}
-
-void toggle_clock(int control)
-{
-		while(control==1)
-		{
-			clk.setHigh();
-			delay_ms(100);
-			clk.setLow();
-		}
-	
 }
 
 void disable373s()
