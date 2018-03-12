@@ -50,8 +50,8 @@ int main(void) {
 	cout<<"Test Shit"<<endl;
 	printf("Welcome to the SJOne Board Interface.\n");
 	char selector='0';
-	char address[8]="";
-	char data[8]="";
+	string address="";
+	string data="";
 	string test="test";
 	while(selector!='e')
 	{
