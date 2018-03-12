@@ -83,14 +83,14 @@ int main(void) {
 		}
 		if (selector=='2')
 		{
-			printf("Enter 8-bit Address to read from: ");
-			scanf("%s", address);
+			cout<<"Enter 8-bit Address to read from: ";
+			cin>>address;
 			cout<<endl;
 			if(bit_checker(address)) 
 			{
 				read_from_sram(address);
 			}
-			else printf("Address length not 8 bits.\n");
+			else cout<<"Address length not 8 bits."<<endl;
 		}
 		else cout<<"Choose the right selector"<<endl;
 	}
