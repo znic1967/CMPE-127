@@ -74,7 +74,7 @@ int main(void) {
 				cout<<endl;
 				if(bit_checker(data))
 				{
-					cout<<"Writing to data <"<<data<<"> to address <"<<address<<">."<<endl;
+					cout<<"Writing data <"<<data<<"> to address <"<<address<<">."<<endl;
 					write_to_sram(address, data);
 				}
 				else printf("Data length not 8 bits.\n");
