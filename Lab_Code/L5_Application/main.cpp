@@ -121,12 +121,12 @@ void write_to_sram(string address, string data)
 	cout<<"Address Latched."<<endl;
 
 	smReset();
-	cout<<"Setting Data"<<endl;
+	cout<<"Setting Data."<<endl;
 	pin_setter(data); //Set Data Bits on SJOne
 	dataOut_w.setHigh();
 	delay_ms(100);
 	dataOut_w.setLow();
-	cout<<"Sending State Machine Command"<<endl;
+	cout<<"Sending State Machine Command."<<endl;
 	pin_setter(wOp); //Latches cmd register
 	cmd_w.setHigh(); //Starts the state machine
 
@@ -183,31 +183,38 @@ void read_from_sram(string address)
 	dir_w.setLow(); //SJOne<-SRAM
 	dataIn_eL.setLow();
 	setAsInput();
+	cmd.setHigh();
+
+	clk.setLow();
+	delay_ms(100);
+	clk.setHigh();
+	delay_ms(100); //1
+
+	clk.setLow();
+	delay_ms(100);
+	clk.setHigh();
+	delay_ms(100); //2
+
+	clk.setLow();
+	delay_ms(100);
+	clk.setHigh();
+	delay_ms(100); //3
+
+	clk.setLow();
+	delay_ms(100);
+	clk.setHigh();
+	delay_ms(100); //4
+
+	clk.setLow();
+	delay_ms(100);
+	clk.setHigh();
+	delay_ms(100); //5
+
+	clk.setLow();
+	delay_ms(100);
+	clk.setHigh();
+	delay_ms(100);
 	
-	cmd_w.setHigh(); //Starts the state machine
-	clk.setHigh();
-	clk.setLow();
-	delay_ms(10);
-
-	clk.setHigh();
-	clk.setLow();
-	delay_ms(10);
-
-	clk.setHigh();
-	clk.setLow();
-	delay_ms(10);
-
-	clk.setHigh();
-	clk.setLow();
-	delay_ms(10);
-
-	clk.setHigh();
-	clk.setLow();
-	delay_ms(10);
-
-	clk.setHigh();
-	clk.setLow();
-	delay_ms(10);
 	rGPIO(); //Prints GPIO Data
 	printf("Read Operation Complete.\n");
 }
