@@ -119,11 +119,31 @@ void write_to_sram(string address, string data)
 	pin_setter(data); //Set Data Bits on SJOne
 	dataOut_w.setHigh();
 	cout<<"Here"<<endl;
-	toggle_clock(1);
+	
 	cmd_w.setHigh(); //Starts the state machine
-	delay_ms(1000); //Let state machine finish
-	cout<<"Here 2"<<endl;
-	toggle_clock(0);
+	clk.setHigh();
+	clk.setLow();
+	delay_ms(1000);
+
+	clk.setHigh();
+	clk.setLow();
+	delay_ms(1000);
+
+	clk.setHigh();
+	clk.setLow();
+	delay_ms(1000);
+
+	clk.setHigh();
+	clk.setLow();
+	delay_ms(1000);
+
+	clk.setHigh();
+	clk.setLow();
+	delay_ms(1000);
+
+	clk.setHigh();
+	clk.setLow();
+	delay_ms(1000);
 
 	printf("Write Operation Complete.\n");
 }
@@ -146,11 +166,30 @@ void read_from_sram(string address)
 	dir_w.setLow(); //SJOne<-SRAM
 	dataIn_eL.setLow();
 
-	toggle_clock(1);
 	cmd_w.setHigh(); //Starts the state machine
-	delay_ms(1000); //Let state machine finish
-	toggle_clock(0);
+	clk.setHigh();
+	clk.setLow();
+	delay_ms(1000);
 
+	clk.setHigh();
+	clk.setLow();
+	delay_ms(1000);
+
+	clk.setHigh();
+	clk.setLow();
+	delay_ms(1000);
+
+	clk.setHigh();
+	clk.setLow();
+	delay_ms(1000);
+
+	clk.setHigh();
+	clk.setLow();
+	delay_ms(1000);
+
+	clk.setHigh();
+	clk.setLow();
+	delay_ms(1000);
 	printf("Read Operation Complete.\n");
 }
 
