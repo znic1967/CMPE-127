@@ -47,27 +47,27 @@ int main(void) {
 	cmd_w.setAsOutput();
 	clk.setAsOutput();
 	disable373s();
-	printf("Welcome to the SJOne Board Interface.\n");
+	cout<<"Welcome to the SJOne Board Interface."<<endl;
 	char selector='0';
 	string address="";
 	string data="";
 	while(selector!='e')
 	{
-		printf("Select an option:\n");
-		printf("1) Write to SRAM.\n");
-		printf("2) Read from SRAM.\n");
-		printf("Enter \"e\" to quit.\n");
+		cout<<"\nSelect an option:"<<endl;
+		cout<<"1) Write to SRAM."<<endl;
+		cout<<"2) Read from SRAM."<<endl;
+		cout<<"Enter \"e\" to quit."<<endl;
 		cin>>selector;
 
 		if(selector=='1')
 		{
-			printf("Enter 8-bit Address to write to: ");
+			cout<<"Enter 8-bit Address to write to: ";
 			cin>>address;
 			cout<<endl;
 			if(bit_checker(address)) 
 			{
 
-				printf("Enter 8-bit data to write: ");
+				cout<<"Enter 8-bit data to write: ";
 				cin>>data;
 				cout<<endl;
 				if(bit_checker(data))
@@ -75,9 +75,9 @@ int main(void) {
 					cout<<"Writing data <"<<data<<"> to address <"<<address<<">."<<endl;
 					write_to_sram(address, data);
 				}
-				else printf("Data length not 8 bits.\n");
+				else cout<<"Data length not 8 bits."<<endl;
 			}
-			else printf("Address length not 8 bits.\n");
+			else cout<<"Address length not 8 bits."<<endl;
 		}
 		if (selector=='2')
 		{
@@ -90,16 +90,15 @@ int main(void) {
 			}
 			else cout<<"Address length not 8 bits."<<endl;
 		}
-		else cout<<"Choose the right selector"<<endl;
+		else cout<<"\n>>Choose the right selector"<<endl<<endl;
 	}
-	printf("SJOne Board Interface Exited.\n");
-	printf("Interface brought to you from countless 4AM SCE wiring wrapping sessions.\n");
+	cout<<"SJOne Board Interface Exited."<<endl;
+	cout<<"Interface brought to you from countless 4AM SCE wiring wrapping sessions."<<endl;
 	cout<<"Hit reset button to restart program."<<endl;
 	while(1)
 	{
-		delay_ms(1000);
+		delay_ms(1000); //Just Loops at the end.
 	}
-
 }
 
 void write_to_sram(string address, string data)
@@ -159,7 +158,7 @@ void write_to_sram(string address, string data)
 	clk.setHigh();
 	delay_ms(100);
 
-	printf("Write Operation Complete.\n");
+	cout<<"Write Operation Complete."<<endl;
 }
 void read_from_sram(string address)
 {
@@ -223,7 +222,7 @@ void read_from_sram(string address)
 	delay_ms(100);
 
 	rGPIO(); //Prints GPIO Data
-	printf("Read Operation Complete.\n");
+	cout<<"Read Operation Complete."<<endl;
 }
 
 void setAsOutput()
