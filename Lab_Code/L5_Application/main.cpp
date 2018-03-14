@@ -8,6 +8,7 @@
 #include <string>
 #include <iostream>
 using namespace std;
+
 void write_to_sram(string address, string data);
 void read_from_sram(string address);
 void pin_setter(string data);
