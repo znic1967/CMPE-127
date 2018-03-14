@@ -93,10 +93,10 @@ int main(void) {
 			}
 			else cout<<"Address length not 8 bits."<<endl;
 		}
-		else cout<<"\n>>Choose the right selector"<<endl<<endl;
+		//else cout<<"\n>>Choose the right selector"<<endl<<endl;
 	}
 	cout<<"SJOne Board Interface Exited."<<endl;
-	cout<<"Interface brought to you from countless 4AM SCE wiring wrapping sessions."<<endl;
+	cout<<"Interface brought .....o you from countless 4AM SCE wiring wrapping sessions."<<endl;
 	cout<<"Hit reset button to restart program."<<endl;
 	while(1)
 	{
@@ -115,7 +115,7 @@ void write_to_sram(string address, string data)
 	pin_setter(address); //Set Address on SJOne
 
 	//Pass Address to SRAM
-	bus_eL.setLow();
+	bus_eL.setLow(); //245 Outputting to bus
 	addr_w.setHigh();
 	delay_ms(10); //Allow address to get to SRAM
 	addr_w.setLow();
@@ -124,6 +124,7 @@ void write_to_sram(string address, string data)
 	smReset(); //Set sel_sram to 0 to clear 164
 	cout<<"Setting Data."<<endl;
 	pin_setter(data); //Set Data Bits on SJOne
+	delay_ms(300);
 	dataOut_w.setHigh();
 	delay_ms(100);
 	dataOut_w.setLow();
