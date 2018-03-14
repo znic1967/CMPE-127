@@ -130,7 +130,7 @@ void write_to_sram(string address, string data)
 	pin_setter(wOp); //Latches cmd register
 	cmd_w.setHigh(); //Starts the state machine
 	delay_ms(10);
-	cmw_w.setLow();
+	cmd_w.setLow();
 	cout<<"Command Register Latched"<<endl;
 
 	clk.setLow();
@@ -186,7 +186,7 @@ void read_from_sram(string address)
 
 	cmd_w.setHigh(); //Starts the state machine
 	delay_ms(10);
-	cmw_w.setLow();
+	cmd_w.setLow();
 	cout<<"Command Register Latched"<<endl;
 	//State machine doesn't start until clock toggle.
 
