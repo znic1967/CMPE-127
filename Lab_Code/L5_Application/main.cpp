@@ -127,6 +127,7 @@ void write_to_sram(string address, string data)
 	dataOut_w.setHigh();
 	delay_ms(100);
 	dataOut_w.setLow();
+	cout<<"Data Latched."<<endl;
 	cout<<"Sending State Machine Command."<<endl;
 	pin_setter(wOp); //Latches cmd register
 	cmd_w.setHigh(); //Starts the state machine
