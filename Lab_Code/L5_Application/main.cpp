@@ -118,7 +118,7 @@ void write_to_sram(string address, string data)
 	bus_eL.setLow();
 	addr_w.setHigh();
 	delay_ms(10); //Allow address to get to SRAM
-	addr_w.setLow();
+	//addr_w.setLow();
 	cout<<"Address Latched."<<endl;
 
 	smReset(); //Set sel_sram to 0 to clear 164
