@@ -46,7 +46,9 @@ int main(void) {
 	dataIn_eL.setAsOutput();
 	cmd_w.setAsOutput();
 	clk.setAsOutput();
+
 	disable373s();
+
 	cout<<"Welcome to the SJOne Board Interface."<<endl;
 	char selector='0';
 	string address="";
@@ -127,6 +129,9 @@ void write_to_sram(string address, string data)
 	cout<<"Sending State Machine Command."<<endl;
 	pin_setter(wOp); //Latches cmd register
 	cmd_w.setHigh(); //Starts the state machine
+	delay_ms(10);
+	cmw_w.setLow();
+	cout<<"Command Register Latched"<<endl;
 
 	clk.setLow();
 	delay_ms(100);
@@ -178,9 +183,11 @@ void read_from_sram(string address)
 	smReset(); //Resets 164
 
 	pin_setter(rOp); 
-	cmd_w.setHigh();
-	delay_ms(1);
-	cmd_w.setLow();//Latches cmd register. 
+
+	cmd_w.setHigh(); //Starts the state machine
+	delay_ms(10);
+	cmw_w.setLow();
+	cout<<"Command Register Latched"<<endl;
 	//State machine doesn't start until clock toggle.
 
 	bus_eL.setHigh();
