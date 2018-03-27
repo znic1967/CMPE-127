@@ -11,7 +11,7 @@ using namespace std;
 
 void write_to_sram(string address, string data);
 void read_from_sram(string address);
-void pin_setter(string data);
+int pin_setter(string data);
 int bit_checker(string bits);
 void disable373s();
 void setGPIOs();
@@ -107,11 +107,12 @@ int main(void) {
 void write_to_sram(string address, string data)
 {
 	string wOp="01000100";
+	int sNum=0;
 	disable373s();
 	setAsOutput();
 	dir_w.setHigh(); //SJOne->SRAM
 
-	pin_setter(address); //Set Address on SJOne
+	sNum=pin_setter(address); //Set Address on SJOne
 	cout<<"Setting Address"<<endl;
 
 	//Pass Address to SRAM
@@ -120,6 +121,7 @@ void write_to_sram(string address, string data)
 	delay_ms(10); //Allow address to get to SRAM
 	addr_w.setLow();
 	cout<<"Address Latched."<<endl;
+	cout<<"SRAM Select: "<<sNum<<endl;
 
 	smReset(); //Set sel_sram to 0 to clear 164
 	cout<<"Setting Data."<<endl;
@@ -171,12 +173,14 @@ void write_to_sram(string address, string data)
 void read_from_sram(string address)
 {
 	string rOp="01001000";
+	int sNum;
 	disable373s();
 	dir_w.setHigh(); //Set as output for commands.
 	setAsOutput();
 	cout<<"Reading from address: "<<address<<""<<endl;
-	pin_setter(address);
-
+	sNum=pin_setter(address);
+	cout<<"SRAM Select: "<<sNum<<endl;
+	
 	//Pass Address to SRAM
 	bus_eL.setLow();
 	addr_w.setHigh();
@@ -259,7 +263,7 @@ void setAsInput()
 	a7.setAsInput();
 }
 
-void pin_setter(string data)
+int pin_setter(string data) //Returns address 7
 {
 	int index=7;
 	int bits[8]={}; //Sets to 0s
@@ -342,13 +346,15 @@ void pin_setter(string data)
 	{
 		//cout<<"A7: 1"<<endl;
 		a7.setHigh();
-		cout<<"SRAM 1 Selected"<<endl;
+		return 1;
+		//cout<<"SRAM 1 Selected"<<endl;
 	} 
 	else
 	{
 		a7.setLow();
+		return 0;
 		//cout<<"A7: 0"<<endl;
-		cout<<"SRAM 0 Selected."<<endl;
+		//cout<<"SRAM 0 Selected."<<endl;
 	}
 }
 
