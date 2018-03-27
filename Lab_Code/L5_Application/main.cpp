@@ -111,8 +111,8 @@ void write_to_sram(string address, string data)
 	setAsOutput();
 	dir_w.setHigh(); //SJOne->SRAM
 
-	cout<<"Setting Address"<<endl;
 	pin_setter(address); //Set Address on SJOne
+	cout<<"Setting Address"<<endl;
 
 	//Pass Address to SRAM
 	bus_eL.setLow(); //245 Outputting to bus
@@ -342,11 +342,13 @@ void pin_setter(string data)
 	{
 		//cout<<"A7: 1"<<endl;
 		a7.setHigh();
+		cout<<"SRAM 1 Selected"<<endl;
 	} 
 	else
 	{
 		a7.setLow();
 		//cout<<"A7: 0"<<endl;
+		cout<<"SRAM 0 Selected."<<endl;
 	}
 }
 
