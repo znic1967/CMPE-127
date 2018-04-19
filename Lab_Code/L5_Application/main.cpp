@@ -16,6 +16,7 @@ void disable373s();
 void setGPIOs();
 void setAsOutput();
 void setAsInput();
+void toggle_clock(int control);
 void smReset();
 string rGPIO();
 void tick();
@@ -50,7 +51,6 @@ int main(void) {
 	disable373s();
 	cout<<"Welcome to the SJOne Board Interface."<<endl;
 	char selector='0';
-	int kpend=0;
 	string address="";
 	string data="";
 	string keys_pressed="";
@@ -98,12 +98,12 @@ int main(void) {
 		{
 			cout<<"Hold the keys you want read on the keypad."<<endl;
 			cout<<"Hit the read key on the SJOne Board"<<endl;
-			while(!kpend)
+			while(kpend)
 			{
 				if (SW.getSwitch(1))
 				{
 					cout<<"State machine started."<<endl;
-					keys_pressed=read_keypad();
+					keys_pressed=readFromKP();
 					cout<<"The following keys were pressed:"<<keys_pressed<<endl;
 					kpend=1;
 				}	
@@ -155,7 +155,7 @@ void write_to_sram(string address, string data)
 void read_from_sram(string address)
 {
 	string rOp="01001000";
-	string data="";
+	string data=""
 	disable373s();
 	dir_w.setHigh(); //Set as output for commands.
 	setAsOutput();
@@ -228,11 +228,11 @@ string read_keypad(){
 		dataIn_eL.setLow(); 
 		bus_eL.setLow(); //Ready for data from SM
 
-		for(int j=0; j<8; j++) tick(); //Toggle clock for 8 clock periods.
+		for(int j=0; j<8; j++) toggle_clock(); //Toggle clock for 8 clock periods.
 		cout<<"State machine run #"<<i+1<<"."<<endl;
 
 		dataIn_eL.setLow(); //Enable Data in register
-		output=rGPIO();
+		output=rGPIO;
 		delay_ms(10); //Safety
 
 		if (output[0]=='1'&&output[7]=='1') buttons+=" A";
