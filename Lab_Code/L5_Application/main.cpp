@@ -51,12 +51,14 @@ int main(void) {
 	disable373s();
 	cout<<"Welcome to the SJOne Board Interface."<<endl;
 	char selector='0';
-	int kpend=0;
+	
 	string address="";
 	string data="";
-	string keys_pressed="";
+	
 	while(selector!='e')
 	{
+		int kpend=0;
+		string keys_pressed="";
 		cout<<"\nSelect an option:"<<endl;
 		cout<<"1) Write to SRAM."<<endl;
 		cout<<"2) Read from SRAM."<<endl;
