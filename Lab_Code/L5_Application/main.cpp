@@ -18,7 +18,9 @@ void setAsOutput();
 void setAsInput();
 void toggle_clock(int control);
 void smReset();
-void rGPIO();
+string rGPIO();
+void tick();
+string read_keypad();
 
 GPIO  a0(P1_29);
 GPIO  a1(P1_28);
@@ -51,11 +53,13 @@ int main(void) {
 	char selector='0';
 	string address="";
 	string data="";
+	string keys_pressed="";
 	while(selector!='e')
 	{
 		cout<<"\nSelect an option:"<<endl;
 		cout<<"1) Write to SRAM."<<endl;
 		cout<<"2) Read from SRAM."<<endl;
+		cout<<"3) Read from Keypad."<<endl;
 		cout<<"Enter \"e\" to quit."<<endl;
 		cin>>selector;
 
@@ -90,8 +94,24 @@ int main(void) {
 			}
 			else cout<<"Address length not 8 bits."<<endl;
 		}
+		if (selector =='3')
+		{
+			cout<<"Hold the keys you want read on the keypad."<<endl;
+			cout<<"Hit the read key on the SJOne Board"<<endl;
+			while(kpend)
+			{
+				if (SW.getSwitch(1))
+				{
+					cout<<"State machine started."<<endl;
+					keys_pressed=readFromKP();
+					cout<<"The following keys were pressed:"<<keys_pressed<<endl;
+					kpend=1;
+				}	
+			}
+		}
 		else cout<<"\n>>Choose the right selector"<<endl<<endl;
 	}
+
 	cout<<"SJOne Board Interface Exited."<<endl;
 	cout<<"Interface brought to you from countless 4AM SCE wiring wrapping sessions."<<endl;
 	cout<<"Hit reset button to restart program."<<endl;
@@ -128,41 +148,14 @@ void write_to_sram(string address, string data)
 	pin_setter(wOp); //Latches cmd register
 	cmd_w.setHigh(); //Starts the state machine
 
-	clk.setLow();
-	delay_ms(100);
-	clk.setHigh();
-	delay_ms(100); //1
-
-	clk.setLow();
-	delay_ms(100);
-	clk.setHigh();
-	delay_ms(100); //2
-
-	clk.setLow();
-	delay_ms(100);
-	clk.setHigh();
-	delay_ms(100); //3
-
-	clk.setLow();
-	delay_ms(100);
-	clk.setHigh();
-	delay_ms(100); //4
-
-	clk.setLow();
-	delay_ms(100);
-	clk.setHigh();
-	delay_ms(100); //5
-
-	clk.setLow();
-	delay_ms(100);
-	clk.setHigh();
-	delay_ms(100);
+	for(int i=0; i<6; i++) tick(); //Toggle clock 6 times
 
 	cout<<"Write Operation Complete."<<endl;
 }
 void read_from_sram(string address)
 {
 	string rOp="01001000";
+	string data=""
 	disable373s();
 	dir_w.setHigh(); //Set as output for commands.
 	setAsOutput();
@@ -191,38 +184,79 @@ void read_from_sram(string address)
 
 	bus_eL.setLow();
 
-	clk.setLow();
-	delay_ms(100);
-	clk.setHigh();
-	delay_ms(100); //1
+	for(int i=0; i<6; i++) tick(); //Toggle clock 6 times
 
-	clk.setLow();
-	delay_ms(100);
-	clk.setHigh();
-	delay_ms(100); //2
-
-	clk.setLow();
-	delay_ms(100);
-	clk.setHigh();
-	delay_ms(100); //3
-
-	clk.setLow();
-	delay_ms(100);
-	clk.setHigh();
-	delay_ms(100); //4
-
-	clk.setLow();
-	delay_ms(100);
-	clk.setHigh();
-	delay_ms(100); //5
-
-	clk.setLow();
-	delay_ms(100);
-	clk.setHigh();
-	delay_ms(100);
-
-	rGPIO(); //Prints GPIO Data
+	data=rGPIO();
+	cout<<"Data: "<<data<<endl;
 	cout<<"Read Operation Complete."<<endl;
+}
+
+string read_keypad(){
+	string row="";
+	string kp_Op="00000100";
+	string output="";
+	string buttons="";
+	for (int i = 0; i < 4; ++i)
+	{
+		if 		(i == 0) row = "00000001";
+		else if (i == 1) row = "00000010";
+		else if (i == 2) row = "00000100";
+		else if (i == 3) row = "00001000";
+
+		disable373s();
+		bus_eL.setHigh();
+		dir_w.setHigh();
+		setAsOutput();
+		bus_eL.setLow();
+		pin_setter(row); //Selects row 1.
+		dataOut_w.setHigh();
+		delay_ms(10);
+		dataOut_w.setLow();
+		cout<<"Row "<<i+1<<" data out latched."<<endl;
+
+		smReset();
+
+		pin_setter("00010000"); //Select kp
+		cmd_w.setHigh();
+		delay_ms(10);
+		cmd_w.setLow();
+		cout<<"Command Register latched."<<endl;
+
+		bus_eL.setHigh();
+		setAsInput();
+		dir_w.setLow(); // A <- B
+		dataIn_eL.setLow(); 
+		bus_eL.setLow(); //Ready for data from SM
+
+		for(int j=0; j<8; j++) toggle_clock(); //Toggle clock for 8 clock periods.
+		cout<<"State machine run #"<<i+1<<"."<<endl;
+
+		dataIn_eL.setLow(); //Enable Data in register
+		output=rGPIO;
+		delay_ms(10); //Safety
+
+		if (output[0]=="1"&&output[7]=="1") buttons+=" A";
+		else if (output[0]=="1"&&output[6]=="1") buttons+=" B";
+		else if (output[0]=="1"&&output[5]=="1") buttons+=" C";
+		else if (output[0]=="1"&&output[4]=="1") buttons+=" D";
+
+		else if (output[1]=="1"&&output[7]=="1") buttons+=" 3";
+		else if (output[1]=="1"&&output[6]=="1") buttons+=" 6";
+		else if (output[1]=="1"&&output[5]=="1") buttons+=" 9";
+		else if (output[1]=="1"&&output[4]=="1") buttons+=" #";
+
+		else if (output[2]=="1"&&output[7]=="1") buttons+=" 2";
+		else if (output[2]=="1"&&output[6]=="1") buttons+=" 5";
+		else if (output[2]=="1"&&output[5]=="1") buttons+=" 8";
+		else if (output[2]=="1"&&output[4]=="1") buttons+=" 0";
+
+		else if (output[3]=="1"&&output[7]=="1") buttons+=" 1";
+		else if (output[3]=="1"&&output[6]=="1") buttons+=" 4";
+		else if (output[3]=="1"&&output[5]=="1") buttons+=" 7";
+		else if (output[3]=="1"&&output[4]=="1") buttons+=" *";
+
+	}
+	return buttons;
 }
 
 void setAsOutput()
@@ -357,16 +391,24 @@ void disable373s()
 	cmd_w.setLow();
 }
 
-void smReset()
+void smReset() //Resets state machine by toggling 164 inputs
 {
 	string pins="00000000";
-	//Reset state machine
 	pin_setter(pins);
 	cmd_w.setHigh();
 	delay_ms(10);
 	cmd_w.setLow();
 }
-void rGPIO()
+string rGPIO()
 {
-	cout<<"Data: "<<a7.read()<<a6.read()<<a5.read()<<a4.read()<<a3.read()<<a2.read()<<a1.read()<<a0.read()<<endl;
+	string data="";
+	data=a7.read()<<a6.read()<<a5.read()<<a4.read()<<a3.read()<<a2.read()<<a1.read()<<a0.read();
+}
+
+void tick()
+{
+	clk.setLow();
+	delay_ms(5);
+	clk.setHigh();
+	delay_ms(5);
 }
