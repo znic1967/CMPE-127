@@ -257,7 +257,7 @@ string read_keypad(){
 		else if (output[3]=='1'&&output[6]=='1') buttons+=" 4";
 		else if (output[3]=='1'&&output[5]=='1') buttons+=" 7";
 		else if (output[3]=='1'&&output[4]=='1') buttons+=" *";
-
+		cout<<"Output bit " <<i<<": "<<output[i]<<" ";
 	}
 	return buttons;
 }
