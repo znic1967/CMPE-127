@@ -236,24 +236,24 @@ string read_keypad(){
 		delay_ms(10); //Safety
 
 		if (output[0]=='1'&&output[7]=='1') buttons+=" A";
-		else if (output[0]=="1"&&output[6]=="1") buttons+=" B";
-		else if (output[0]=="1"&&output[5]=="1") buttons+=" C";
-		else if (output[0]=="1"&&output[4]=="1") buttons+=" D";
+		else if (output[0]=='1'&&output[6]=='1') buttons+=" B";
+		else if (output[0]=='1'&&output[5]=='1') buttons+=" C";
+		else if (output[0]=='1'&&output[4]=='1') buttons+=" D";
 
-		else if (output[1]=="1"&&output[7]=="1") buttons+=" 3";
-		else if (output[1]=="1"&&output[6]=="1") buttons+=" 6";
-		else if (output[1]=="1"&&output[5]=="1") buttons+=" 9";
-		else if (output[1]=="1"&&output[4]=="1") buttons+=" #";
+		else if (output[1]=='1'&&output[7]=='1') buttons+=" 3";
+		else if (output[1]=='1'&&output[6]=='1') buttons+=" 6";
+		else if (output[1]=='1'&&output[5]=='1') buttons+=" 9";
+		else if (output[1]=='1'&&output[4]=='1') buttons+=" #";
 
-		else if (output[2]=="1"&&output[7]=="1") buttons+=" 2";
-		else if (output[2]=="1"&&output[6]=="1") buttons+=" 5";
-		else if (output[2]=="1"&&output[5]=="1") buttons+=" 8";
-		else if (output[2]=="1"&&output[4]=="1") buttons+=" 0";
+		else if (output[2]=='1'&&output[7]=='1') buttons+=" 2";
+		else if (output[2]=='1'&&output[6]=='1') buttons+=" 5";
+		else if (output[2]=='1'&&output[5]=='1') buttons+=" 8";
+		else if (output[2]=='1'&&output[4]=='1') buttons+=" 0";
 
-		else if (output[3]=="1"&&output[7]=="1") buttons+=" 1";
-		else if (output[3]=="1"&&output[6]=="1") buttons+=" 4";
-		else if (output[3]=="1"&&output[5]=="1") buttons+=" 7";
-		else if (output[3]=="1"&&output[4]=="1") buttons+=" *";
+		else if (output[3]=='1'&&output[7]=='1') buttons+=" 1";
+		else if (output[3]=='1'&&output[6]=='1') buttons+=" 4";
+		else if (output[3]=='1'&&output[5]=='1') buttons+=" 7";
+		else if (output[3]=='1'&&output[4]=='1') buttons+=" *";
 
 	}
 	return buttons;
