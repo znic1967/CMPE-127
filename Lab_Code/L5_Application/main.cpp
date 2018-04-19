@@ -404,9 +404,9 @@ string rGPIO()
 {
 	stringstream converter;
 	string data="";
-	bool bit=a7.read();
+	//bool bit=a7.read();
 
-	converter << boolalpha << bit;
+	converter << notboolalpha << a7.read();
 	data = converter.str();
 	//cout<<"Data: "<<a7.read()<<a6.read()<<a5.read()<<a4.read()<<a3.read()<<a2.read()<<a1.read()<<a0.read();
 	//bit=a7.read();//+a6.read()+a5.read()+a4.read()+a3.read()+a2.read()+a1.read()+a0.read();
