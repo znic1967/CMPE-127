@@ -404,13 +404,8 @@ string rGPIO()
 {
 	stringstream converter;
 	string data="";
-	//bool bit=a7.read();
-
-	converter << noboolalpha << a7.read() << noboolalpha << a6.read() << noboolalpha << a6.read() << noboolalpha << a5.read() << noboolalpha << a4.read() << noboolalpha << a3.read() << noboolalpha << a2.read()<< noboolalpha << a1.read() << noboolalpha << a0.read(); 
+	converter << noboolalpha << a7.read() << noboolalpha << a6.read() << noboolalpha << a5.read() << noboolalpha << a4.read() << noboolalpha << a3.read() << noboolalpha << a2.read() << noboolalpha << a1.read()<< noboolalpha << a0.read();
 	data = converter.str();
-	//cout<<"Data: "<<a7.read()<<a6.read()<<a5.read()<<a4.read()<<a3.read()<<a2.read()<<a1.read()<<a0.read();
-	//bit=a7.read();//+a6.read()+a5.read()+a4.read()+a3.read()+a2.read()+a1.read()+a0.read();
-	//data+=bit;
 	return data;
 }
 
