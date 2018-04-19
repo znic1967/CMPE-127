@@ -235,7 +235,7 @@ string read_keypad(){
 		output=rGPIO;
 		delay_ms(10); //Safety
 
-		if (output[0]=="1"&&output[7]=="1") buttons+=" A";
+		if (output[0]=='1'&&output[7]=='1') buttons+=" A";
 		else if (output[0]=="1"&&output[6]=="1") buttons+=" B";
 		else if (output[0]=="1"&&output[5]=="1") buttons+=" C";
 		else if (output[0]=="1"&&output[4]=="1") buttons+=" D";
