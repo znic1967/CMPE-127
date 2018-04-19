@@ -402,7 +402,7 @@ void smReset() //Resets state machine by toggling 164 inputs
 string rGPIO()
 {
 	string data="";
-	char bit;
+	int bit;
 	//cout<<"Data: "<<a7.read()<<a6.read()<<a5.read()<<a4.read()<<a3.read()<<a2.read()<<a1.read()<<a0.read();
 	bit=a7.read();//+a6.read()+a5.read()+a4.read()+a3.read()+a2.read()+a1.read()+a0.read();
 	data+=bit;
