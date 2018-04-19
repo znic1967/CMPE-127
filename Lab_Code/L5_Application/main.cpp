@@ -148,7 +148,7 @@ void write_to_sram(string address, string data)
 	pin_setter(wOp); //Latches cmd register
 	cmd_w.setHigh(); //Starts the state machine
 
-	for(int i=0; i<6; i++) tick(); //Toggle clock 6 times
+	for(int i=0; i<6; i++) {tick();} //Toggle clock 6 times
 
 	cout<<"Write Operation Complete."<<endl;
 }
@@ -184,7 +184,7 @@ void read_from_sram(string address)
 
 	bus_eL.setLow();
 
-	for(int i=0; i<6; i++) tick(); //Toggle clock 6 times
+	for(int i=0; i<6; i++) {tick();} //Toggle clock 6 times
 
 	data=rGPIO();
 	cout<<"Data: "<<data<<endl;
@@ -228,7 +228,7 @@ string read_keypad(){
 		dataIn_eL.setLow(); 
 		bus_eL.setLow(); //Ready for data from SM
 
-		for(int j=0; j<8; j++) tick(); //Toggle clock for 8 clock periods.
+		for(int j=0; j<8; j++) {tick(); //Toggle clock for 8 clock periods.
 		cout<<"State machine run #"<<i+1<<"."<<endl;
 
 		dataIn_eL.setLow(); //Enable Data in register
@@ -402,7 +402,7 @@ void smReset() //Resets state machine by toggling 164 inputs
 string rGPIO()
 {
 	string data="";
-	data=a7.read()<<a6.read()<<a5.read()<<a4.read()<<a3.read()<<a2.read()<<a1.read()<<a0.read();
+	data=a7.read()+a6.read()+a5.read()+a4.read()+a3.read()+a2.read()+a1.read()+a0.read();
 	return data;
 }
 
