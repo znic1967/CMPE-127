@@ -208,7 +208,7 @@ string read_keypad(){
 
 		disable373s();
 		bus_eL.setHigh();
-		dir_w.setHigh();
+		dir_w.setHigh(); // A-> B
 		setAsOutput();
 		bus_eL.setLow();
 		pin_setter(row); //Selects row 1.
@@ -218,7 +218,7 @@ string read_keypad(){
 		cout<<"Row "<<i+1<<" data out latched."<<endl;
 
 		smReset();
-
+		delay_ms(10);
 		pin_setter("00010000"); //Select kp
 		cmd_w.setHigh();
 		delay_ms(10);
