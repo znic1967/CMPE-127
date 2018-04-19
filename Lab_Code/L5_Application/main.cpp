@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
+#include <sstream>
 using namespace std;
 void write_to_sram(string address, string data);
 void read_from_sram(string address);
@@ -401,11 +402,15 @@ void smReset() //Resets state machine by toggling 164 inputs
 }
 string rGPIO()
 {
+	stringstream converter;
 	string data="";
-	int bit;
+	bool bit=a7.read();
+
+	converter << boolalpha << bit;
+	data = converter.str();
 	//cout<<"Data: "<<a7.read()<<a6.read()<<a5.read()<<a4.read()<<a3.read()<<a2.read()<<a1.read()<<a0.read();
-	bit=a7.read();//+a6.read()+a5.read()+a4.read()+a3.read()+a2.read()+a1.read()+a0.read();
-	data+=bit;
+	//bit=a7.read();//+a6.read()+a5.read()+a4.read()+a3.read()+a2.read()+a1.read()+a0.read();
+	//data+=bit;
 	return data;
 }
 
