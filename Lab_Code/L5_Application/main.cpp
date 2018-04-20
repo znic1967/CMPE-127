@@ -231,7 +231,7 @@ string read_keypad(){
 		dataIn_eL.setLow(); 
 		bus_eL.setLow(); //Ready for data from SM
 
-		for(int j=0; j<8; j++) {tick(); }//Toggle clock for 8 clock periods.
+		for(int j=0; j<10; j++) {tick(); }//Toggle clock for 8 clock periods.
 		cout<<"State machine run #"<<i+1<<"."<<endl;
 
 		dataIn_eL.setLow(); //Enable Data in register
