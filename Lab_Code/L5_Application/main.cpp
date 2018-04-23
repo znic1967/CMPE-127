@@ -54,6 +54,8 @@ int main(void) {
 	
 	string address="";
 	string data="";
+	LD.setRightDigit('I');
+	LD.setLeftDigit('H');
 	
 	while(selector!='e')
 	{
@@ -246,38 +248,49 @@ string read_keypad(){
 			buttons+=" A";
 		} 
 		if (output[0]=='1'&&output[6]=='1'){
+			LD.setRightDigit('B');
 			buttons+=" B";
 		} 
 		if (output[0]=='1'&&output[5]=='1'){
+			LD.setRightDigit('C');
 			buttons+=" C";
 		} 
 		if (output[0]=='1'&&output[4]=='1'){
+			LD.setRightDigit('D');
 			buttons+=" D";
 		} 
 
 		if (output[1]=='1'&&output[7]=='1'){
+			LD.setNumber(3);
 			buttons+=" 3";
 		}
 		if (output[1]=='1'&&output[6]=='1'){
+			LD.setNumber(6);
 			buttons+=" 6";
 		}
 		if (output[1]=='1'&&output[5]=='1'){
+			LD.setNumber(9);
 			buttons+=" 9";
 		}
 		if (output[1]=='1'&&output[4]=='1'){
+			cout<<"# Pressed."<<endl;
 			buttons+=" #";
 		}
 
 		if (output[2]=='1'&&output[7]=='1'){
+			LD.setNumber(2);
 			buttons+=" 2";
 		}
 		if (output[2]=='1'&&output[6]=='1'){
+			LD.setNumber(5);
 			buttons+=" 5";
 		}
 		if (output[2]=='1'&&output[5]=='1'){
+			LD.setNumber(8);
 			buttons+=" 8";
 		}
 		if (output[2]=='1'&&output[4]=='1'){
+			LD.setNumber(0);
 			buttons+=" 0";
 		}
 
@@ -286,12 +299,15 @@ string read_keypad(){
 			buttons+=" 1";
 		}
 		if (output[3]=='1'&&output[6]=='1'){
+			LD.setNumber(4);
 			buttons+=" 4";
 		}
 		if (output[3]=='1'&&output[5]=='1'){
+			LD.setNumber(7);
 			buttons+=" 7";
 		}
 		if (output[3]=='1'&&output[4]=='1'){
+			cout<<"* Pressed."<<endl;
 			buttons+=" *";
 		} 
 		//cout<<"Output bit " <<i<<": "<<output[i]<<" ";
