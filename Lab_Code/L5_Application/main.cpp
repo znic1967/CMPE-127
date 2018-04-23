@@ -200,7 +200,7 @@ string read_keypad(){
 	string output="";
 	string buttons="";
 
-	LD.setAll(0);
+	LE.setAll(0);
 	LD.clear();
 	for (int i = 0; i < 4; ++i)
 	{
