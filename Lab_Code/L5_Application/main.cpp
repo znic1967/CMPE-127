@@ -128,7 +128,7 @@ int main(void) {
 
 void write_to_sram(string address, string data)
 {
-	string wOp="01000100";
+	string wOp="00010001"; //Must reflect pins on new schematic
 	disable373s();
 	setAsOutput();
 	dir_w.setHigh(); //SJOne->SRAM
