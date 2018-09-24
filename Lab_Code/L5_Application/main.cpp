@@ -159,7 +159,7 @@ void write_to_sram(string address, string data)
 }
 void read_from_sram(string address)
 {
-	string rOp="01001000";
+	string rOp="00001001";
 	string data="";
 	disable373s();
 	dir_w.setHigh(); //Set as output for commands.
