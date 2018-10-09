@@ -224,7 +224,7 @@ string read_keypad(){
 
 		smReset();
 		delay_ms(10);
-		pin_setter("00010000"); //Select kp
+		pin_setter("00000100"); //Select kp
 		cmd_w.setHigh();
 		delay_ms(10);
 		cmd_w.setLow();
