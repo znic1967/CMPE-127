@@ -374,7 +374,7 @@ void write_to_LCD (string data, char rs)
 void read_from_LCD (string data, char rs)
 {
 	string rOp="00001010"; //Must reflect pins on new schematic
-	wOp[5]=rs; //Sets lcd_rs to be send to cmd reg
+	rOp[5]=rs; //Sets lcd_rs to be send to cmd reg
 	cout<<"RS: "<<rs<<endl;
 	disable373s();
 	setAsOutput();
