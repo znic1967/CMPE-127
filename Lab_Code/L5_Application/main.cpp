@@ -23,6 +23,7 @@ void tick();
 string read_keypad();
 void initialize_LCD ();
 void write_to_LCD (string data, char rs);
+void read_from_LCD (string data, char rs);
 
 
 GPIO  a0(P1_29);
@@ -129,6 +130,7 @@ int main(void) {
 		if (selector =='4')
 		{
 			write_to_LCD("00110010",'1');
+			read_from_LCD("00000000",'1');
 			cout<<"Test complete."<<endl;
 		}
 		else cout<<"\n>>Choose the right selector"<<endl<<endl;
@@ -367,9 +369,42 @@ void write_to_LCD (string data, char rs)
 
 	for(int i=0; i<5; i++) {tick();} //Toggle clock 4 times
 }
-void read_from_LCD ()
-{
 
+//CMD Reg Pins (0-7): sel_sram, sel_lcd, sel_kp, r, w, lcd_rs, sel_spi_temp_sens_oe, NULL;
+void read_from_LCD (string data, char rs)
+{
+	string rOp="00001010"; //Must reflect pins on new schematic
+	wOp[5]=rs; //Sets lcd_rs to be send to cmd reg
+	cout<<"RS: "<<rs<<endl;
+	disable373s();
+	setAsOutput();
+	dir_w.setHigh(); //SJOne->SRAM
+	bus_eL.setLow();
+
+	smReset();
+	pin_setter(data);
+	dataOut_w.setHigh();
+	delay_ms(10);
+	dataOut_w.setLow();
+	pin_setter(rOp); //Sets cmd pins for lcd write op.
+
+	cmd_w.setHigh(); 
+	delay_ms(10);
+	cmd_w.setLow(); //cmd values latched
+	//state machine doesnt start until clock toggle
+
+	bus_eL.setHigh();
+	dir_w.setLow(); //SJOne<-LCD
+	dataIn_eL.setLow();
+	setAsInput();
+
+	bus_eL.setLow();
+
+	for(int i=0; i<5; i++) {tick();} //Toggle clock 4 times
+
+	data=rGPIO();
+	cout<<"Data: "<<data<<endl;
+	cout<<"Read Operation Complete."<<endl;
 }
 void setAsOutput()
 {
