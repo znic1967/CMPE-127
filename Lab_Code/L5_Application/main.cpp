@@ -365,7 +365,7 @@ void write_to_LCD (string data, char rs)
 	delay_ms(10);
 	cmd_w.setLow(); //cmd values latched
 
-	for(int i=0; i<4; i++) {tick();} //Toggle clock 4 times
+	for(int i=0; i<5; i++) {tick();} //Toggle clock 4 times
 }
 void read_from_LCD ()
 {
