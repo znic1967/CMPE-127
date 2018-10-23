@@ -348,6 +348,7 @@ void write_to_LCD (string data, char rs)
 {
 	string wOp="00010010"; //Must reflect pins on new schematic
 	wOp[5]=rs; //Sets lcd_rs to be send to cmd reg
+	cout<<"RS: "<<rs<<endl;
 	disable373s();
 	setAsOutput();
 	dir_w.setHigh(); //SJOne->SRAM
@@ -355,11 +356,14 @@ void write_to_LCD (string data, char rs)
 	smReset();
 	pin_setter(data);
 	dataOut_w.setHigh();
-	delay_ms(5);
+	delay_ms(2);
 	dataOut_w.setLow();
-	pin_setter(wOp); //Latches cmd reg
+	pin_setter(wOp); //Sets cmd pins for lcd write op.
 
-	cmd_w.setHigh(); //enables cmd reg output
+	cmd_w.setHigh(); 
+	delay_ms(2);
+	cmd_w.setLow(); //c
+
 	for(int i=0; i<4; i++) {tick();} //Toggle clock 4 times
 }
 void read_from_LCD ()
