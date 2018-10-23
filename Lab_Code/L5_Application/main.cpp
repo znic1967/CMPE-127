@@ -352,6 +352,7 @@ void write_to_LCD (string data, char rs)
 	disable373s();
 	setAsOutput();
 	dir_w.setHigh(); //SJOne->SRAM
+	bus_eL.setLow();
 
 	smReset();
 	pin_setter(data);
