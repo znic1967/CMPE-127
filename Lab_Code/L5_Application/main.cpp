@@ -356,13 +356,13 @@ void write_to_LCD (string data, char rs)
 	smReset();
 	pin_setter(data);
 	dataOut_w.setHigh();
-	delay_ms(2);
+	delay_ms(10);
 	dataOut_w.setLow();
 	pin_setter(wOp); //Sets cmd pins for lcd write op.
 
 	cmd_w.setHigh(); 
-	delay_ms(2);
-	cmd_w.setLow(); //c
+	delay_ms(10);
+	cmd_w.setLow(); //cmd values latched
 
 	for(int i=0; i<4; i++) {tick();} //Toggle clock 4 times
 }
