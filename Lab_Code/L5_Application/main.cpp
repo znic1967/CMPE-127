@@ -21,6 +21,9 @@ void smReset();
 string rGPIO();
 void tick();
 string read_keypad();
+void initialize_LCD ();
+void write_to_LCD (string data, string rs);
+
 
 GPIO  a0(P1_29);
 GPIO  a1(P1_28);
@@ -39,8 +42,12 @@ GPIO  dataIn_eL(P2_3);
 GPIO  cmd_w(P2_4);
 GPIO clk(P2_6);
 
+
+//CMD Reg Pins (0-7): sel_sram, sel_lcd, sel_kp, r, w, lcd_rs, sel_spi_temp_sens_oe, NULL;
+
 int main(void) {
 
+	//Initialize SJOne Board
 	dir_w.setAsOutput();
 	bus_eL.setAsOutput();
 	addr_w.setAsOutput();
@@ -49,14 +56,18 @@ int main(void) {
 	cmd_w.setAsOutput();
 	clk.setAsOutput();
 	disable373s();
-	cout<<"Welcome to the SJOne Board Interface."<<endl;
+
 	char selector='0';
-	
 	string address="";
 	string data="";
+
+	//7 Seg Greeting
 	LD.setRightDigit('I');
 	LD.setLeftDigit('H');
 	
+	initialize_LCD();
+	cout<<"Welcome to the SJOne Board Interface."<<endl;
+
 	while(selector!='e')
 	{
 		int kpend=0;
@@ -316,6 +327,38 @@ string read_keypad(){
 	return buttons;
 }
 
+//CMD Reg Pins (0-7): sel_sram, sel_lcd, sel_kp, r, w, lcd_rs, sel_spi_temp_sens_oe, NULL;
+void initialize_LCD () 
+{
+	write_to_LCD("00000001","0"); //Clear Display
+	write_to_LCD("00000010","0"); //Set cursor to home
+	write_to_LCD("00000110","0"); //Set cursor to to move and increment
+	write_to_LCD("00010100","0"); //Set to 2 lines and 8 bit data
+
+}
+
+void write_to_LCD (string data, string rs)
+{
+	string wOp="00010010"; //Must reflect pins on new schematic
+	wOp[5]=rs; //Sets lcd_rs to be send to cmd reg
+	disable373s();
+	setAsOutput();
+	dir_w.setHigh(); //SJOne->SRAM
+
+	smReset();
+	pin_setter(data);
+	dataOut_w.setHigh();
+	delay_ms(5);
+	dataOut_w.setLow();
+	pin_setter(wOp); //Latches cmd reg
+
+	cmd_w.setHigh(); //enables cmd reg output
+	for(int i=0; i<4 i++) {tick();} //Toggle clock 4 times
+}
+void read_from_LCD ()
+{
+
+}
 void setAsOutput()
 {
 	a0.setAsOutput();
@@ -448,7 +491,7 @@ void disable373s()
 	cmd_w.setLow();
 }
 
-void smReset() //Resets state machine by toggling 164 inputs
+void smReset() //Clears all 164's so they are ready to count
 {
 	string pins="00000000";
 	pin_setter(pins);
@@ -465,10 +508,10 @@ string rGPIO()
 	return data;
 }
 
-void tick()
+void tick() //changed clock to go high
 {
-	clk.setLow();
-	delay_ms(5);
 	clk.setHigh();
-	delay_ms(5);
+	delay_ms(1);
+	clk.setLow();
+	delay_ms(1);
 }
