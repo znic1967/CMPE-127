@@ -126,7 +126,7 @@ int main(void) {
 				}	
 			}
 		}
-		if (selector =='3')
+		if (selector =='4')
 		{
 			write_to_LCD("00110010",'1');
 			cout<<"Test complete."<<endl;
