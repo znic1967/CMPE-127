@@ -22,7 +22,7 @@ string rGPIO();
 void tick();
 string read_keypad();
 void initialize_LCD ();
-void write_to_LCD (string data, string rs);
+void write_to_LCD (string data, char rs);
 
 
 GPIO  a0(P1_29);
