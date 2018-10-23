@@ -76,6 +76,7 @@ int main(void) {
 		cout<<"1) Write to SRAM."<<endl;
 		cout<<"2) Read from SRAM."<<endl;
 		cout<<"3) Read from Keypad."<<endl;
+		cout<<"4)LCD Test"<<endl;
 		cout<<"Enter \"e\" to quit."<<endl;
 		cin>>selector;
 
@@ -124,6 +125,11 @@ int main(void) {
 					kpend=1;
 				}	
 			}
+		}
+		if (selector =='3')
+		{
+			write_to_LCD("00110010",'1');
+			cout<<"Test complete."<<endl;
 		}
 		else cout<<"\n>>Choose the right selector"<<endl<<endl;
 	}
