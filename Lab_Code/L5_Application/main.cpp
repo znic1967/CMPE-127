@@ -330,14 +330,15 @@ string read_keypad(){
 //CMD Reg Pins (0-7): sel_sram, sel_lcd, sel_kp, r, w, lcd_rs, sel_spi_temp_sens_oe, NULL;
 void initialize_LCD () 
 {
-	write_to_LCD("00000001","0"); //Clear Display
-	write_to_LCD("00000010","0"); //Set cursor to home
-	write_to_LCD("00000110","0"); //Set cursor to to move and increment
-	write_to_LCD("00010100","0"); //Set to 2 lines and 8 bit data
+	delay_ms(10);
+	write_to_LCD("00000001",'0'); //Clear Display
+	write_to_LCD("00000010",'0'); //Set cursor to home
+	write_to_LCD("00000110",'0'); //Set cursor to to move and increment
+	write_to_LCD("00010100",'0'); //Set to 2 lines and 8 bit data
 
 }
 
-void write_to_LCD (string data, string rs)
+void write_to_LCD (string data, char rs)
 {
 	string wOp="00010010"; //Must reflect pins on new schematic
 	wOp[5]=rs; //Sets lcd_rs to be send to cmd reg
