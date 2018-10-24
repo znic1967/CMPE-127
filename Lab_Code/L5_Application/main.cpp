@@ -71,7 +71,9 @@ int main(void) {
 	LD.setLeftDigit('H');
 	
 	initialize_LCD();
+	str_to_LCD("Freetime Destroyer 9000");
 	cout<<"Welcome to the SJOne Board Interface."<<endl;
+
 
 	while(selector!='e')
 	{
