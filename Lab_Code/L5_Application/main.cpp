@@ -136,6 +136,7 @@ int main(void) {
 			cout<<"Type what you want to be written to the keypad: ";
 			cin>>kp_input;
 			str_to_LCD(kp_input);
+			cout<<"You wrote: "<<kp_input<<endl;
 		}
 		else cout<<"\n>>Choose the right selector"<<endl<<endl;
 	}
@@ -355,7 +356,7 @@ void str_to_LCD(string input){
 	write_to_LCD("00000001",'0'); //Clear Display
 	write_to_LCD("00000010",'0'); //Return Home
 	write_to_LCD("00001111",'0'); //Display ON + Blinking Cursor
-	
+
 	char current;
 	for (unsigned int i=0; i<input.length(); i++)
 	{
@@ -393,13 +394,66 @@ string lcd_lookup(char c)
 			break;
 		case('9'): return "00111001";
 			break;
+		case('A'): return "01000001";
+			break;
+		case('B'): return "01000010";
+			break;
+		case('C'): return "01000011";
+			break;
+		case('D'): return "01000100";
+			break;
+		case('E'): return "01000101";
+			break;
+		case('F'): return "01000110";
+			break;
+		case('G'): return "01000111";
+			break;
+		case('H'): return "01001000";
+			break;
+		case('I'): return "01001001";
+			break;
+		case('J'): return "01001010";
+			break;
+		case('K'): return "01001011";
+			break;
+		case('L'): return "01001100";
+			break;
+		case('M'): return "01001101";
+			break;
+		case('N'): return "01001110";
+			break;
+		case('O'): return "01001111";
+			break;
+		case('P'): return "01010000";
+			break;
+		case('Q'): return "01010001";
+			break;
+		case('R'): return "01010010";
+			break;
+		case('S'): return "01010011";
+			break;
+		case('T'): return "01010100";
+			break;
+		case('U'): return "01010101";
+			break;
+		case('V'): return "01010110";
+			break;
+		case('W'): return "01010111";
+			break;
+		case('X'): return "01011000";
+			break;
+		case('Y'): return "01011001";
+			break;
+		case('Z'): return "01011010";
+			break;
+		default: return "00100000"; //space
+			break;
 	}
 }
 void write_to_LCD (string data, char rs)
 {
 	string wOp="00010010"; //Must reflect pins on new schematic
 	wOp[2]=rs; //Sets lcd_rs to be send to cmd reg
-	cout<<"CMD Input: "<<wOp<<endl;
 	disable373s();
 	setAsOutput();
 	dir_w.setHigh(); //SJOne->SRAM
