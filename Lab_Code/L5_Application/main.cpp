@@ -46,7 +46,7 @@ GPIO  dataIn_eL(P2_3);
 GPIO  cmd_w(P2_4);
 GPIO clk(P2_6);
 
-
+int lcd_data_length=0;
 //CMD Reg Pins (0-7): sel_sram, sel_lcd, sel_kp, r, w, lcd_rs, sel_spi_temp_sens_oe, NULL;
 
 int main(void) {
@@ -64,7 +64,6 @@ int main(void) {
 	char selector='0';
 	string address="";
 	string data="";
-	int lcd_data_length=0;
 
 	//7 Seg Greeting
 	LD.setRightDigit('I');
@@ -469,8 +468,8 @@ char lcd_r_lookup(string str)
 	if (str=="00110101") return '5';
 	if (str=="00110110") return '6';
 	if (str=="00110111") return '7';
-	if (str=="00111000"): return '8';
-	if (str=="00111001"): return '9';
+	if (str=="00111000") return '8';
+	if (str=="00111001") return '9';
 	else return ' ';
 }
 void write_to_LCD (string data, char rs)
