@@ -129,8 +129,8 @@ int main(void) {
 		}
 		if (selector =='4')
 		{
-			write_to_LCD("00110010",'1');
-			read_from_LCD("00000000",'1');
+			write_to_LCD("01010111",'1');
+			//read_from_LCD("00000000",'1');
 			cout<<"Test complete."<<endl;
 		}
 		else cout<<"\n>>Choose the right selector"<<endl<<endl;
