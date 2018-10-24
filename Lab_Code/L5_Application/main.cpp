@@ -113,7 +113,7 @@ int main(void) {
 			cout<<endl;
 			if(bit_checker(address)) 
 			{
-				read_from_sram(address);
+				cout<<"Data: "<<read_from_sram(address);
 			}
 			else cout<<"Address length not 8 bits."<<endl;
 		}
@@ -503,7 +503,7 @@ string read_from_LCD ()
 	string charData="";
 	string fullOutput="";
 	char lcd_char;
-
+	write_to_LCD("00000010",'0'); //set cursor to home for reading
 	for (int i=0; i<lcd_data_length; i++)
 	{
 		disable373s();
