@@ -176,11 +176,11 @@ int main(void) {
 				if(bit_checker(address))
 				{
 					keys_pressed=read_keypad();
-					cout<<"The following keys were pressed:"<<keys_pressed<<endl;
+					cout<<"The following keys were pressed: "<<keys_pressed<<endl;
 					lcd_data=lcd_w_lookup(keys_pressed[0]);
 					cout<<"Storing character data to SRAM address <"<<address<<">."<<endl;
 					write_to_sram(address,lcd_data);
-					cout<<"Reading data from SRAM."<<endl;
+					//cout<<"Reading data from SRAM."<<endl;
 					lcd_read_data=read_from_sram(address);
 					cout<<"Outputting char data <"<<lcd_read_data<<"> to LCD."<<endl;
 					write_to_LCD(lcd_read_data,'1');
@@ -214,7 +214,7 @@ void write_to_sram(string address, string data)
 	setAsOutput();
 	dir_w.setHigh(); //SJOne->SRAM
 
-	cout<<"Setting Address"<<endl;
+	//cout<<"Setting Address"<<endl;
 	pin_setter(address); //Set Address on SJOne
 
 	//Pass Address to SRAM
@@ -222,15 +222,15 @@ void write_to_sram(string address, string data)
 	addr_w.setHigh();
 	delay_ms(10); //Allow address to get to SRAM
 	addr_w.setLow();
-	cout<<"Address Latched."<<endl;
+	//cout<<"Address Latched."<<endl;
 
 	smReset(); //Set sel_sram to 0 to clear 164
-	cout<<"Setting Data."<<endl;
+	//cout<<"Setting Data."<<endl;
 	pin_setter(data); //Set Data Bits on SJOne
 	dataOut_w.setHigh();
 	delay_ms(100);
 	dataOut_w.setLow();
-	cout<<"Sending State Machine Command."<<endl;
+	//cout<<"Sending State Machine Command."<<endl;
 	pin_setter(wOp); //Latches cmd register
 	cmd_w.setHigh(); //Starts the state machine
 
@@ -245,7 +245,7 @@ string read_from_sram(string address)
 	disable373s();
 	dir_w.setHigh(); //Set as output for commands.
 	setAsOutput();
-	cout<<"Reading from address: "<<address<<""<<endl;
+	cout<<"Reading from address <"<<address<<">."<<endl;
 	pin_setter(address);
 
 	//Pass Address to SRAM
@@ -308,7 +308,7 @@ string read_keypad(){
 		cmd_w.setHigh();
 		delay_ms(10);
 		cmd_w.setLow();
-		cout<<"Command Register latched."<<endl;
+		//cout<<"Command Register latched."<<endl;
 
 		bus_eL.setHigh();
 		setAsInput();
@@ -353,7 +353,6 @@ string read_keypad(){
 			buttons+="9";
 		}
 		if (output[1]=='1'&&output[4]=='1'){
-			cout<<"# Pressed."<<endl;
 			buttons+="#";
 		}
 
@@ -387,7 +386,6 @@ string read_keypad(){
 			buttons+="7";
 		}
 		if (output[3]=='1'&&output[4]=='1'){
-			cout<<"* Pressed."<<endl;
 			buttons+="*";
 		} 
 		//cout<<"Output bit " <<i<<": "<<output[i]<<" ";
