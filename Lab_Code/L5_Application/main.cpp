@@ -461,31 +461,17 @@ string lcd_w_lookup(char c)
 }
 char lcd_r_lookup(string str)
 {
-
-	switch(str){
-		case("00110000"): return '0';
-			break;
-		case("00110001"): return '1';
-			break;
-		case("00110010"): return '2';
-			break;
-		case("00110011"): return '3';
-			break;
-		case("00110100"): return '4';
-			break;
-		case("00110101"): return '5';
-			break;
-		case("00110110"): return '6';
-			break;
-		case("00110111"): return '7';
-			break;
-		case("00111000"): return '8';
-			break;
-		case("00111001"): return '9';
-			break;
-		default: return ' '; //space
-			break;
-	}
+	if (str=="00110000") return '0';
+	if (str=="00110001") return '1';
+	if (str=="00110010") return '2';
+	if (str=="00110011") return '3';
+	if (str=="00110100") return '4';
+	if (str=="00110101") return '5';
+	if (str=="00110110") return '6';
+	if (str=="00110111") return '7';
+	if (str=="00111000"): return '8';
+	if (str=="00111001"): return '9';
+	else return ' ';
 }
 void write_to_LCD (string data, char rs)
 {
