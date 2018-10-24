@@ -23,7 +23,7 @@ void tick();
 string read_keypad();
 void initialize_LCD ();
 void write_to_LCD (string data, char rs);
-void read_from_LCD (string data, char rs);
+void read_from_LCD (string data);
 string lcd_lookup(char c);
 void str_to_LCD(string input);
 
@@ -64,6 +64,7 @@ int main(void) {
 	char selector='0';
 	string address="";
 	string data="";
+	int lcd_data_length=0;
 
 	//7 Seg Greeting
 	LD.setRightDigit('I');
@@ -81,6 +82,7 @@ int main(void) {
 		cout<<"2) Read from SRAM."<<endl;
 		cout<<"3) Read from Keypad."<<endl;
 		cout<<"4) Write to LCD."<<endl;
+		cout<<"5) Read from LCD."<<endl;
 		cout<<"Enter \"e\" to quit."<<endl;
 		cin>>selector;
 
@@ -133,11 +135,15 @@ int main(void) {
 		if (selector =='4')
 		{
 			string kp_input="";
-			cout<<"Type what you want to be written to the keypad: ";
+			cout<<"Input (a-z, 0-9): ";
 			cin.ignore(256, '\n'); //for getline to work
 			getline(cin,kp_input, '\n');
 			str_to_LCD(kp_input);
 			cout<<"You wrote: "<<kp_input<<endl;
+		}
+		if (selector =='4')
+		{
+			read_from_LCD();
 		}
 		else cout<<"\n>>Choose the right selector"<<endl<<endl;
 	}
@@ -359,7 +365,8 @@ void str_to_LCD(string input){
 	write_to_LCD("00001111",'0'); //Display ON + Blinking Cursor
 
 	char current;
-	for (unsigned int i=0; i<input.length(); i++)
+	lcd_data_length=input.length();
+	for (unsigned int i=0; i<lcd_data_length; i++)
 	{
 		current=input[i];
 
@@ -372,8 +379,9 @@ void str_to_LCD(string input){
 	}
 }
 
-string lcd_lookup(char c)
+string lcd_w_lookup(char c)
 {
+
 	switch(c){
 		case('0'): return "00110000";
 			break;
@@ -394,6 +402,86 @@ string lcd_lookup(char c)
 		case('8'): return "00111000";
 			break;
 		case('9'): return "00111001";
+			break;
+		case('A'): return "01000001";
+			break;
+		case('B'): return "01000010";
+			break;
+		case('C'): return "01000011";
+			break;
+		case('D'): return "01000100";
+			break;
+		case('E'): return "01000101";
+			break;
+		case('F'): return "01000110";
+			break;
+		case('G'): return "01000111";
+			break;
+		case('H'): return "01001000";
+			break;
+		case('I'): return "01001001";
+			break;
+		case('J'): return "01001010";
+			break;
+		case('K'): return "01001011";
+			break;
+		case('L'): return "01001100";
+			break;
+		case('M'): return "01001101";
+			break;
+		case('N'): return "01001110";
+			break;
+		case('O'): return "01001111";
+			break;
+		case('P'): return "01010000";
+			break;
+		case('Q'): return "01010001";
+			break;
+		case('R'): return "01010010";
+			break;
+		case('S'): return "01010011";
+			break;
+		case('T'): return "01010100";
+			break;
+		case('U'): return "01010101";
+			break;
+		case('V'): return "01010110";
+			break;
+		case('W'): return "01010111";
+			break;
+		case('X'): return "01011000";
+			break;
+		case('Y'): return "01011001";
+			break;
+		case('Z'): return "01011010";
+			break;
+		default: return "00100000"; //space
+			break;
+	}
+}
+char lcd_r_lookup(string str)
+{
+
+	switch(str){
+		case("00110000"): return '0';
+			break;
+		case("00110001"): return '1';
+			break;
+		case("00110010"): return '2';
+			break;
+		case("00110011"): return '3';
+			break;
+		case("00110100"): return '4';
+			break;
+		case("00110101"): return '5';
+			break;
+		case("00110110"): return '6';
+			break;
+		case("00110111"): return '7';
+			break;
+		case("00111000"): return '8';
+			break;
+		case("00111001"): return '9';
 			break;
 		case('A'): return "01000001";
 			break;
@@ -475,40 +563,46 @@ void write_to_LCD (string data, char rs)
 }
 
 //CMD Reg Pins (0-7): sel_sram, sel_lcd, sel_kp, r, w, lcd_rs, sel_spi_temp_sens_oe, NULL;
-void read_from_LCD (string data, char rs)
+string read_from_LCD ()
 {
-	string rOp="00001010"; //Must reflect pins on new schematic
-	rOp[5]=rs; //Sets lcd_rs to be send to cmd reg
-	cout<<"RS: "<<rs<<endl;
-	disable373s();
-	setAsOutput();
-	dir_w.setHigh(); //SJOne->SRAM
-	bus_eL.setLow();
+	string rOp="00101010"; //Must reflect pins on new schematic
+	string charData="";
+	string fullOutput="";
+	char lcd_char;
 
-	smReset();
-	pin_setter(data);
-	dataOut_w.setHigh();
-	delay_ms(10);
-	dataOut_w.setLow();
-	pin_setter(rOp); //Sets cmd pins for lcd write op.
+	for (int i=0; i<lcd_data_length; i++)
+	{
+		disable373s();
+		setAsOutput();
+		dir_w.setHigh(); //SJOne->SRAM
+		bus_eL.setLow();
 
-	cmd_w.setHigh(); 
-	delay_ms(10);
-	cmd_w.setLow(); //cmd values latched
-	//state machine doesnt start until clock toggle
+		pin_setter(data);
+		dataOut_w.setHigh();
+		delay_ms(1);
+		dataOut_w.setLow();
 
-	bus_eL.setHigh();
-	dir_w.setLow(); //SJOne<-LCD
-	dataIn_eL.setLow();
-	setAsInput();
+		smReset();
+		pin_setter(rOp); //Sets cmd pins for lcd write op.
+		cmd_w.setHigh(); 
+		delay_ms(1);
+		cmd_w.setLow(); //cmd values latched
+		//state machine doesnt start until clock toggle
 
-	bus_eL.setLow();
+		bus_eL.setHigh();
+		dir_w.setLow(); //SJOne<-LCD
+		dataIn_eL.setLow();
+		setAsInput();
 
-	for(int i=0; i<5; i++) {tick();} //Toggle clock 4 times
+		bus_eL.setLow();
 
-	data=rGPIO();
-	cout<<"Data: "<<data<<endl;
-	cout<<"Read Operation Complete."<<endl;
+		for(int i=0; i<5; i++) {tick();} //Toggle clock 5 times
+
+		charData=rGPIO();
+		lcd_char=lcd_r_lookup(charData);
+		fullOutput+=lcd_char;
+	}
+	return fullOutput;
 }
 void setAsOutput()
 {
