@@ -134,7 +134,12 @@ int main(void) {
 				{
 					cout<<"State machine started."<<endl;
 					keys_pressed=read_keypad();
-					cout<<"The following keys were pressed:"<<keys_pressed<<endl;
+					cout<<"The following keys were pressed:";
+					for (int i=0; i<keys_pressed.length(); i++)
+					{
+						cout<<keys_pressed[i]<<" ";
+					}
+					cout<<endl;
 					kpend=1;
 				}	
 			}
@@ -320,73 +325,73 @@ string read_keypad(){
 
 		if (output[0]=='1'&&output[7]=='1'){
 			LD.setRightDigit('A');
-			buttons+=" A";
+			buttons+="A";
 		} 
 		if (output[0]=='1'&&output[6]=='1'){
 			LD.setRightDigit('B');
-			buttons+=" B";
+			buttons+="B";
 		} 
 		if (output[0]=='1'&&output[5]=='1'){
 			LD.setRightDigit('C');
-			buttons+=" C";
+			buttons+="C";
 		} 
 		if (output[0]=='1'&&output[4]=='1'){
 			LD.setRightDigit('D');
-			buttons+=" D";
+			buttons+="D";
 		} 
 
 		if (output[1]=='1'&&output[7]=='1'){
 			LD.setNumber(3);
-			buttons+=" 3";
+			buttons+="3";
 		}
 		if (output[1]=='1'&&output[6]=='1'){
 			LD.setNumber(6);
-			buttons+=" 6";
+			buttons+="6";
 		}
 		if (output[1]=='1'&&output[5]=='1'){
 			LD.setNumber(9);
-			buttons+=" 9";
+			buttons+="9";
 		}
 		if (output[1]=='1'&&output[4]=='1'){
 			cout<<"# Pressed."<<endl;
-			buttons+=" #";
+			buttons+="#";
 		}
 
 		if (output[2]=='1'&&output[7]=='1'){
 			LD.setNumber(2);
-			buttons+=" 2";
+			buttons+="2";
 		}
 		if (output[2]=='1'&&output[6]=='1'){
 			LD.setNumber(5);
-			buttons+=" 5";
+			buttons+="5";
 		}
 		if (output[2]=='1'&&output[5]=='1'){
 			LD.setNumber(8);
-			buttons+=" 8";
+			buttons+="8";
 		}
 		if (output[2]=='1'&&output[4]=='1'){
 			LD.setNumber(0);
-			buttons+=" 0";
+			buttons+="0";
 		}
 
 		if (output[3]=='1'&&output[7]=='1'){
 			LD.setNumber(1);
-			buttons+=" 1";
+			buttons+="1";
 		}
 		if (output[3]=='1'&&output[6]=='1'){
 			LD.setNumber(4);
-			buttons+=" 4";
+			buttons+="4";
 		}
 		if (output[3]=='1'&&output[5]=='1'){
 			LD.setNumber(7);
-			buttons+=" 7";
+			buttons+="7";
 		}
 		if (output[3]=='1'&&output[4]=='1'){
 			cout<<"* Pressed."<<endl;
-			buttons+=" *";
+			buttons+="*";
 		} 
 		//cout<<"Output bit " <<i<<": "<<output[i]<<" ";
-		cout<<"Output "<<i<<": "<<output<<endl;
+		//cout<<"Output "<<i<<": "<<output<<endl;
 	}
 	return buttons;
 }
