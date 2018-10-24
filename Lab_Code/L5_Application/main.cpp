@@ -177,7 +177,7 @@ int main(void) {
 					write_to_sram(address,lcd_data);
 					cout<<"Reading data from SRAM."<<endl;
 					lcd_read_data=read_from_sram(address);
-					cout<<"Outputting char data <"<<lcd_read_data<<"> to LCD."<<<<endl;
+					cout<<"Outputting char data <"<<lcd_read_data<<"> to LCD."<<endl;
 					write_to_LCD(lcd_read_data,'1');
 
 					cout<<"Type \"e\" to stop read sequence. Hit enter to continue."<<endl;
