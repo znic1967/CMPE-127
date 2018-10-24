@@ -10,7 +10,7 @@
 #include <sstream>
 using namespace std;
 void write_to_sram(string address, string data);
-void read_from_sram(string address);
+string read_from_sram(string address);
 void pin_setter(string data);
 int bit_checker(string bits);
 void disable373s();
@@ -117,7 +117,10 @@ int main(void) {
 			cout<<endl;
 			if(bit_checker(address)) 
 			{
-				read_from_sram(address);
+				data=read_from_sram(address);
+				cout<<"Data: "<<data<<endl;
+				cout<<"Read operation complete."<<endl;
+
 			}
 			else cout<<"Address length not 8 bits."<<endl;
 		}
@@ -175,7 +178,7 @@ int main(void) {
 
 					cout<<"Type \"e\" to stop read sequence. Hit enter to continue."<<endl;
 					cin>>endflag;
-					if (endflag=="e"){kpend=TRUE;}
+					if (endflag=="e"){kpend=1;}
 				}
 			}
 			else {cout<<"Wrong number of address bits."<<endl;}
@@ -224,7 +227,7 @@ void write_to_sram(string address, string data)
 
 	cout<<"Write Operation Complete."<<endl;
 }
-void read_from_sram(string address)
+string read_from_sram(string address)
 {
 	string rOp="00001001";
 	string data="";
@@ -259,8 +262,7 @@ void read_from_sram(string address)
 	for(int i=0; i<6; i++) {tick();} //Toggle clock 6 times
 
 	data=rGPIO();
-	cout<<"Data: "<<data<<endl;
-	cout<<"Read Operation Complete."<<endl;
+	return data;
 }
 
 string read_keypad(){
