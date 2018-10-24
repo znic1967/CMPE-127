@@ -143,7 +143,8 @@ int main(void) {
 		}
 		if (selector =='5')
 		{
-			cout<<"Data: "<<read_from_LCD();
+			cout<<"Reading..."<<endl;
+			cout<<"Data: "<<read_from_LCD()<<endl<<endl;
 		}
 		else cout<<"\n>>Choose the right selector"<<endl<<endl;
 	}
@@ -471,6 +472,33 @@ char lcd_r_lookup(string str)
 	if (str=="00110111") return '7';
 	if (str=="00111000") return '8';
 	if (str=="00111001") return '9';
+	if (str=="01000001") return 'A';
+	if (str=="01000010") return 'B';
+	if (str=="01000011") return 'C';
+	if (str=="01000100") return 'D';
+	if (str=="01000101") return 'E';
+	if (str=="01000110") return 'F';
+	if (str=="01000111") return 'G';
+	if (str=="01001000") return 'H';
+	if (str=="01001001") return 'I';
+	if (str=="01001010") return 'J';
+	if (str=="01001011") return 'K';
+	if (str=="01001100") return 'L';
+	if (str=="01001101") return 'M';
+	if (str=="01001110") return 'N';
+	if (str=="01001111") return 'O';
+	if (str=="01001101") return 'M';
+	if (str=="01010000") return 'P';
+	if (str=="01010001") return 'Q';
+	if (str=="01010010") return 'R';
+	if (str=="01010011") return 'S';
+	if (str=="01010100") return 'T';
+	if (str=="01010101") return 'U';
+	if (str=="01010110") return 'V';
+	if (str=="01010111") return 'W';
+	if (str=="01011000") return 'X';
+	if (str=="01011001") return 'Y';
+	if (str=="01011010") return 'Z';
 	else return ' ';
 }
 void write_to_LCD (string data, char rs)
