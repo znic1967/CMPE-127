@@ -132,10 +132,10 @@ int main(void) {
 		}
 		if (selector =='4')
 		{
-			string="";
+			string kp_input="";
 			cout<<"Type what you want to be written to the keypad: ";
 			cin>>kp_input;
-			str_to_LCD(input);
+			str_to_LCD(kp_input);
 		}
 		else cout<<"\n>>Choose the right selector"<<endl<<endl;
 	}
@@ -352,7 +352,7 @@ void initialize_LCD ()
 
 void str_to_LCD(string input){
 	char current;
-	for (int i=0; i<input.length()-1; i++)
+	for (unsigned int i=0; i<input.length()-1; i++)
 	{
 		current=input[i];
 
