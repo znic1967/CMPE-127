@@ -158,14 +158,18 @@ int main(void) {
 			string endflag="";
 			string lcd_read_data="";
 
-			if(bit_checker(data))
+			write_to_LCD("00000001",'0'); //Clear Display
+			write_to_LCD("00000010",'0'); //Return Home
+			write_to_LCD("00001111",'0'); //Display ON + Blinking Cursor
+
+			while(!kpend)
 			{
-				while(!kpend)
+				string lcd_data="";
+				cout<<"Hold the keys you want read on the keypad!"<<endl;
+				cout<<"SRAM Address for KP Storage: ";
+				cin>>address;
+				if(bit_checker(address))
 				{
-					string lcd_data="";
-					cout<<"Hold the keys you want read on the keypad!"<<endl;
-					cout<<"SRAM Address for KP Storage: ";
-					cin>>address;
 					keys_pressed=read_keypad();
 					cout<<"The following keys were pressed:"<<keys_pressed<<endl;
 					lcd_data=lcd_w_lookup(keys_pressed[0]);
@@ -173,16 +177,18 @@ int main(void) {
 					write_to_sram(address,lcd_data);
 					cout<<"Reading data from SRAM."<<endl;
 					lcd_read_data=read_from_sram(address);
-					cout<<"Outputting to LCD."<<endl;
+					cout<<"Outputting char data <"<<lcd_read_data<<"> to LCD."<<<<endl;
 					write_to_LCD(lcd_read_data,'1');
 
 					cout<<"Type \"e\" to stop read sequence. Hit enter to continue."<<endl;
 					cin>>endflag;
 					if (endflag=="e"){kpend=1;}
 				}
-			}
-			else {cout<<"Wrong number of address bits."<<endl;}
-			
+				else
+				{
+					cout<<"Wrong number of bits."<<endl;
+				}
+			}	
 		}
 		else cout<<"\n>>Choose the right selector"<<endl<<endl;
 	}
