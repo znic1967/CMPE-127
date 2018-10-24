@@ -79,12 +79,14 @@ int main(void) {
 	{
 		int kpend=0;
 		string keys_pressed="";
+
 		cout<<"\nSelect an option:"<<endl;
 		cout<<"1) Write to SRAM."<<endl;
 		cout<<"2) Read from SRAM."<<endl;
 		cout<<"3) Read from Keypad."<<endl;
 		cout<<"4) Write to LCD."<<endl;
 		cout<<"5) Read from LCD."<<endl;
+		cout<<"6) Read from Keypad, display on LCD."<<endl;
 		cout<<"Enter \"e\" to quit."<<endl;
 		cin>>selector;
 
@@ -147,6 +149,37 @@ int main(void) {
 		{
 			cout<<"Reading..."<<endl;
 			cout<<"Data: "<<read_from_LCD()<<endl<<endl;
+		}
+		if (selector =='6')
+		{
+			string endflag="";
+			string lcd_read_data="";
+
+			if(bit_checker(data))
+			{
+				while(!kpend)
+				{
+					string lcd_data="";
+					cout<<"Hold the keys you want read on the keypad!"<<endl;
+					cout<<"SRAM Address for KP Storage: ";
+					cin>>address;
+					keys_pressed=read_keypad();
+					cout<<"The following keys were pressed:"<<keys_pressed<<endl;
+					lcd_data=lcd_w_lookup(keys_pressed[0]);
+					cout<<"Storing character data to SRAM address <"<<address<<">."<<endl;
+					write_to_sram(address,lcd_data);
+					cout<<"Reading data from SRAM."<<endl;
+					lcd_read_data=read_from_sram(address);
+					cout<<"Outputting to LCD."<<endl;
+					write_to_LCD(lcd_read_data,'1');
+
+					cout<<"Type \"e\" to stop read sequence. Hit enter to continue."<<endl;
+					cin>>endflag;
+					if (endflag=="e"){kpend=TRUE;}
+				}
+			}
+			else {cout<<"Wrong number of address bits."<<endl;}
+			
 		}
 		else cout<<"\n>>Choose the right selector"<<endl<<endl;
 	}
