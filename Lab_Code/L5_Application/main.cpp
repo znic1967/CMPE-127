@@ -366,7 +366,7 @@ void str_to_LCD(string input){
 
 	char current;
 	lcd_data_length=input.length();
-	for (unsigned int i=0; i<lcd_data_length; i++)
+	for (int i=0; i<lcd_data_length; i++)
 	{
 		current=input[i];
 
@@ -375,7 +375,7 @@ void str_to_LCD(string input){
 			current=toupper(current);
 		}
 
-		write_to_LCD(lcd_lookup(current),'1');
+		write_to_LCD(lcd_w_lookup(current),'1');
 	}
 }
 
