@@ -338,12 +338,12 @@ string read_keypad(){
 //CMD Reg Pins (0-7): sel_sram, sel_lcd, sel_kp, r, w, lcd_rs, sel_spi_temp_sens_oe, NULL;
 void initialize_LCD () 
 {
-	delay_ms(10);
+	delay_ms(200); //Need time for LCD inter reset state machine
+	write_to_LCD("00111000",'0'); //Function Set 
 	write_to_LCD("00000001",'0'); //Clear Display
-	write_to_LCD("00000010",'0'); //Set cursor to home
-	write_to_LCD("00000110",'0'); //Set cursor to to move and increment
-	write_to_LCD("00010100",'0'); //Set to 2 lines and 8 bit data
-
+	write_to_LCD("00000010",'0'); //Return Home
+	write_to_LCD("00001111",'0'); //Display ON + Blinking Cursor
+	cout<<"LCD Initialized"<<endl;
 }
 
 void write_to_LCD (string data, char rs)
@@ -359,12 +359,12 @@ void write_to_LCD (string data, char rs)
 	smReset();
 	pin_setter(data);
 	dataOut_w.setHigh();
-	delay_ms(10);
+	delay_ms(1);
 	dataOut_w.setLow();
 	pin_setter(wOp); //Sets cmd pins for lcd write op.
 
 	cmd_w.setHigh(); 
-	delay_ms(10);
+	delay_ms(1);
 	cmd_w.setLow(); //cmd values latched
 
 	for(int i=0; i<5; i++) {tick();} //Toggle clock 4 times
