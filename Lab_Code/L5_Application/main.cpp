@@ -134,8 +134,8 @@ int main(void) {
 				{
 					cout<<"State machine started."<<endl;
 					keys_pressed=read_keypad();
-					cout<<"The following keys were pressed:";
-					for (int i=0; i<keys_pressed.length(); i++)
+					cout<<"The following keys were pressed: ";
+					for (unsigned int i=0; i<keys_pressed.length(); i++)
 					{
 						cout<<keys_pressed[i]<<" ";
 					}
@@ -185,7 +185,7 @@ int main(void) {
 					cout<<"Outputting char data <"<<lcd_read_data<<"> to LCD."<<endl;
 					write_to_LCD(lcd_read_data,'1');
 
-					cout<<"Type \"e\" to stop read sequence. Hit enter to continue."<<endl;
+					cout<<"Type \"e\" to stop read sequence. Type anything else to continue."<<endl;
 					cin>>endflag;
 					if (endflag=="e"){kpend=1;}
 				}
@@ -503,6 +503,10 @@ string lcd_w_lookup(char c)
 		case('Y'): return "01011001";
 			break;
 		case('Z'): return "01011010";
+			break;
+		case('*'): return "00101010";
+			break;
+		case('#'): return "00100011";
 			break;
 		default: return "00100000"; //space
 			break;
