@@ -510,11 +510,6 @@ string read_from_LCD ()
 		dir_w.setHigh(); //SJOne->SRAM
 		bus_eL.setLow();
 
-		pin_setter(data);
-		dataOut_w.setHigh();
-		delay_ms(1);
-		dataOut_w.setLow();
-
 		smReset();
 		pin_setter(rOp); //Sets cmd pins for lcd write op.
 		cmd_w.setHigh(); 
@@ -529,7 +524,7 @@ string read_from_LCD ()
 
 		bus_eL.setLow();
 
-		for(int i=0; i<5; i++) {tick();} //Toggle clock 5 times
+		for(int j=0; j<5; j++) {tick();} //Toggle clock 5 times
 
 		charData=rGPIO();
 		lcd_char=lcd_r_lookup(charData);
