@@ -24,6 +24,9 @@ string read_keypad();
 void initialize_LCD ();
 void write_to_LCD (string data, char rs);
 void read_from_LCD (string data, char rs);
+string lcd_lookup(char c);
+void str_to_LCD(string input);
+
 
 
 GPIO  a0(P1_29);
@@ -129,19 +132,10 @@ int main(void) {
 		}
 		if (selector =='4')
 		{
-			write_to_LCD("01000110",'1');
-			write_to_LCD("01010101",'1');
-			write_to_LCD("01000011",'1');
-			write_to_LCD("01001011",'1');
-			write_to_LCD("00100000",'1');
-			write_to_LCD("01011001",'1');
-			write_to_LCD("01001111",'1');
-			write_to_LCD("01010101",'1');
-			write_to_LCD("00100000",'1');
-			write_to_LCD("01001111",'1');
-			write_to_LCD("01011010",'1');
-			//read_from_LCD("00000000",'1');
-			cout<<"Test complete."<<endl;
+			string="";
+			cout<<"Type what you want to be written to the keypad: ";
+			cin>>kp_input;
+			str_to_LCD(input);
 		}
 		else cout<<"\n>>Choose the right selector"<<endl<<endl;
 	}
@@ -353,9 +347,49 @@ void initialize_LCD ()
 	write_to_LCD("00000001",'0'); //Clear Display
 	write_to_LCD("00000010",'0'); //Return Home
 	write_to_LCD("00001111",'0'); //Display ON + Blinking Cursor
-	cout<<"LCD Initialized"<<endl;
+	cout<<"LCD Initialized."<<endl;
 }
 
+void str_to_LCD(string input){
+	char current;
+	for (int i=0; i<input.length()-1; i++)
+	{
+		current=input[i];
+
+		if(isalpha(current))
+		{
+			current=toupper(current);
+		}
+
+		write_to_LCD(lcd_lookup(current),'1');
+	}
+}
+
+string lcd_lookup(char c)
+{
+	switch(c){
+		case('0'): return "00110000";
+			break;
+		case('1'): return "00110001";
+			break;
+		case('2'): return "00110010";
+			break;
+		case('3'): return "00110011";
+			break;
+		case('4'): return "00110100";
+			break;
+		case('5'): return "00110101";
+			break;
+		case('6'): return "00110110";
+			break;
+		case('7'): return "00110111";
+			break;
+		case('8'): return "00111000";
+			break;
+		case('9'): return "00111001";
+			break;
+	}
+}
 void write_to_LCD (string data, char rs)
 {
 	string wOp="00010010"; //Must reflect pins on new schematic
