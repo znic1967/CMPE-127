@@ -23,7 +23,7 @@ void tick();
 string read_keypad();
 void initialize_LCD ();
 void write_to_LCD (string data, char rs);
-void read_from_LCD (string data);
+string read_from_LCD ();
 string lcd_lookup(char c);
 void str_to_LCD(string input);
 
@@ -141,7 +141,7 @@ int main(void) {
 			str_to_LCD(kp_input);
 			cout<<"You wrote: "<<kp_input<<endl;
 		}
-		if (selector =='4')
+		if (selector =='5')
 		{
 			read_from_LCD();
 		}
