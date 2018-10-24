@@ -113,7 +113,7 @@ int main(void) {
 			cout<<endl;
 			if(bit_checker(address)) 
 			{
-				cout<<"Data: "<<read_from_sram(address);
+				read_from_sram(address);
 			}
 			else cout<<"Address length not 8 bits."<<endl;
 		}
@@ -143,7 +143,7 @@ int main(void) {
 		}
 		if (selector =='5')
 		{
-			read_from_LCD();
+			cout<<"Data: "<<read_from_LCD();
 		}
 		else cout<<"\n>>Choose the right selector"<<endl<<endl;
 	}
