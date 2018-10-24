@@ -24,7 +24,8 @@ string read_keypad();
 void initialize_LCD ();
 void write_to_LCD (string data, char rs);
 string read_from_LCD ();
-string lcd_lookup(char c);
+string lcd_w_lookup(char c);
+char lcd_r_lookup(string str);
 void str_to_LCD(string input);
 
 
