@@ -80,7 +80,7 @@ int main(void) {
 		cout<<"1) Write to SRAM."<<endl;
 		cout<<"2) Read from SRAM."<<endl;
 		cout<<"3) Read from Keypad."<<endl;
-		cout<<"4)LCD Test"<<endl;
+		cout<<"4) Write to LCD."<<endl;
 		cout<<"Enter \"e\" to quit."<<endl;
 		cin>>selector;
 
@@ -351,8 +351,13 @@ void initialize_LCD ()
 }
 
 void str_to_LCD(string input){
+
+	write_to_LCD("00000001",'0'); //Clear Display
+	write_to_LCD("00000010",'0'); //Return Home
+	write_to_LCD("00001111",'0'); //Display ON + Blinking Cursor
+	
 	char current;
-	for (unsigned int i=0; i<input.length()-1; i++)
+	for (unsigned int i=0; i<input.length(); i++)
 	{
 		current=input[i];
 
