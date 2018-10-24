@@ -349,7 +349,7 @@ void initialize_LCD ()
 void write_to_LCD (string data, char rs)
 {
 	string wOp="00010010"; //Must reflect pins on new schematic
-	wOp[5]=rs; //Sets lcd_rs to be send to cmd reg
+	wOp[2]=rs; //Sets lcd_rs to be send to cmd reg
 	cout<<"CMD Input: "<<wOp<<endl;
 	disable373s();
 	setAsOutput();
