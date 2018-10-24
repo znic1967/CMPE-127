@@ -134,7 +134,8 @@ int main(void) {
 		{
 			string kp_input="";
 			cout<<"Type what you want to be written to the keypad: ";
-			getline(cin,kp_input);
+			cin.ignore(256, '\n'); //for getline to work
+			getline(cin,kp_input, '\n');
 			str_to_LCD(kp_input);
 			cout<<"You wrote: "<<kp_input<<endl;
 		}
