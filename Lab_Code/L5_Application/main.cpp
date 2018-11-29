@@ -827,7 +827,7 @@ string rGPIO()
 void tick() //changed clock to go high
 {
 	clk.setHigh();
-	delay_ms(2);
+	delay_ms(10);
 	clk.setLow();
-	delay_ms(2);
+	delay_ms(10);
 }
