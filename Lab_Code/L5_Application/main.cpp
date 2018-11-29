@@ -210,7 +210,8 @@ int main(void) {
 			initialize_LCD();
 			while(!kpend)
 			{
-				if(SW.getSwitch(1)){}
+				if(SW.getSwitch(1))
+				{
 					keys_pressed=read_keypad();
 					cout<<"The following keys were pressed: "<<keys_pressed<<endl;
 					
