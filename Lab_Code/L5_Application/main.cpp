@@ -247,6 +247,7 @@ int main(void) {
 			}
 
 			lcd_read=read_from_LCD();
+			cout<<"Expression: "<<lcd_read<<endl;
 			answer=te_interp(lcd_read.c_str(), 0);
 
 			stringstream stream;
