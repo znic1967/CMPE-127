@@ -231,11 +231,12 @@ int main(void) {
 					{
 						write_to_LCD(lcd_w_lookup('/'),'1');
 					}
-				// 	else
-				// 	{
-				// 		lcd_data=lcd_w_lookup(keys_pressed[0]);	
-				// 		write_to_LCD(lcd_data,'1');	
-				// 	}
+					else
+					{
+						lcd_data=lcd_w_lookup(keys_pressed[0]);	
+						write_to_LCD(lcd_data,'1');	
+					}
+				delay_ms(100);
 				 }
 				if (SW.getSwitch(4))
 				{
