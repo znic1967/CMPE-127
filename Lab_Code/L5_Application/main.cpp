@@ -219,15 +219,15 @@ int main(void) {
 					{
 						write_to_LCD(lcd_w_lookup('+'),'1');
 					}
-					if (keys_pressed[0]=='B')
+					else if (keys_pressed[0]=='B')
 					{
 						write_to_LCD(lcd_w_lookup('-'),'1');
 					}
-					if (keys_pressed[0]=='C')
+					else if (keys_pressed[0]=='C')
 					{
 						initialize_LCD();
 					}
-					if (keys_pressed[0]=='D')
+					else if (keys_pressed[0]=='D')
 					{
 						write_to_LCD(lcd_w_lookup('/'),'1');
 					}
@@ -236,7 +236,7 @@ int main(void) {
 						lcd_data=lcd_w_lookup(keys_pressed[0]);	
 						write_to_LCD(lcd_data,'1');	
 					}
-				delay_ms(100);
+				//delay_ms(100);
 				 }
 				if (SW.getSwitch(4))
 				{
