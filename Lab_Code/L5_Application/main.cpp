@@ -208,6 +208,7 @@ int main(void) {
 			string answer_str="";
 			double answer=0;
 			initialize_LCD();
+			lcd_data_length=0;
 			while(!kpend)
 			{
 				if(SW.getSwitch(1))
@@ -236,7 +237,7 @@ int main(void) {
 						lcd_data=lcd_w_lookup(keys_pressed[0]);	
 						write_to_LCD(lcd_data,'1');	
 					}
-				//delay_ms(100);
+					lcd_data_length++;
 				 }
 				if (SW.getSwitch(4))
 				{
