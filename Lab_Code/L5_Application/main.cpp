@@ -236,7 +236,7 @@ int main(void) {
 				// 		lcd_data=lcd_w_lookup(keys_pressed[0]);	
 				// 		write_to_LCD(lcd_data,'1');	
 				// 	}
-				// }
+				 }
 				if (SW.getSwitch(4))
 				{
 					kpend=1;
