@@ -351,7 +351,7 @@ string read_keypad(){
 		dataOut_w.setHigh();
 		delay_ms(10);
 		dataOut_w.setLow();
-		cout<<"Row "<<i+1<<" data out latched."<<endl;
+		//cout<<"Row "<<i+1<<" data out latched."<<endl;
 
 		smReset();
 		delay_ms(10);
@@ -368,7 +368,7 @@ string read_keypad(){
 		bus_eL.setLow(); //Ready for data from SM
 
 		for(int j=0; j<10; j++) {tick(); }//Toggle clock for 8 clock periods.
-		cout<<"State machine run #"<<i+1<<"."<<endl;
+		//cout<<"State machine run #"<<i+1<<"."<<endl;
 
 		dataIn_eL.setLow(); //Enable Data in register
 		output=rGPIO();
