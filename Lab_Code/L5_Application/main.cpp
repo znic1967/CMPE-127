@@ -197,7 +197,7 @@ int main(void) {
 				}
 			}	
 		}
-		if (selector =='6')
+		if (selector =='7')
 		{
 			cout<<"Type math expression on keypad."<<endl;
 			cout<<"A: Add, B: Subtract, C: Clear, D: Divide"<<endl;
