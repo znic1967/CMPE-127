@@ -635,7 +635,7 @@ void write_to_LCD (string data, char rs)
 	cmd_w.setLow(); //cmd values latched
 
 	for(int i=0; i<5; i++) {tick();} //Toggle clock 4 times
-	lcd_data_length++;
+	//lcd_data_length++;
 }
 
 //CMD Reg Pins (0-7): sel_sram, sel_lcd, sel_kp, r, w, lcd_rs, sel_spi_temp_sens_oe, NULL;
