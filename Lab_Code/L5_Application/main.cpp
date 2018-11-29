@@ -251,7 +251,7 @@ int main(void) {
 
 			stringstream stream;
 			stream << fixed << setprecision(2) << answer;
-			answer_str s = stream.str();
+			answer_str = stream.str();
 
 			str_to_LCD("ANS: "+answer_str);
 			cout<<"Answer: "+answer_str<<endl;
