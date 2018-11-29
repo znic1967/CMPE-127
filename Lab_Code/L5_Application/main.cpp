@@ -215,11 +215,11 @@ int main(void) {
 				
 				if (keys_pressed[0]=='A')
 				{
-					write_to_LCD(lcd_w_lookup('+'));
+					write_to_LCD(lcd_w_lookup('+'),'1');
 				}
 				if (keys_pressed[0]=='B')
 				{
-					write_to_LCD(lcd_w_lookup('-'));
+					write_to_LCD(lcd_w_lookup('-'),'1');
 				}
 				if (keys_pressed[0]=='C')
 				{
@@ -227,7 +227,7 @@ int main(void) {
 				}
 				if (keys_pressed[0]=='D')
 				{
-					write_to_LCD(lcd_w_lookup('/'));
+					write_to_LCD(lcd_w_lookup('/'),'1');
 				}
 				else
 				{
@@ -241,7 +241,7 @@ int main(void) {
 				delay_ms(100);
 			}
 			lcd_read=read_from_LCD();
-			answer=te_interp(lcd_read, 0);
+			answer=te_interp(lcd_read.c_str(), 0);
 			answer_str=to_string(answer);
 			str_to_LCD("ANS "+answer_str);
 			cout<<"Answer: "+answer_str<<endl;
