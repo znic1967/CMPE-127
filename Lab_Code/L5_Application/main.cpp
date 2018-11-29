@@ -201,44 +201,45 @@ int main(void) {
 		{
 			cout<<"Type math expression on keypad."<<endl;
 			cout<<"A: Add, B: Subtract, C: Clear, D: Divide"<<endl;
-			cout<<"Press button 1 on the SJOne board to calculate."<<endl;
-
+			cout<<"Press button 1 on the SJOne board to read keypad."<<endl;
+			cout<<"Press button 4 on the SJOne board to calculate."<<endl;
 			string lcd_data="";
 			string lcd_read="";
 			string answer_str="";
 			double answer=0;
-
+			initialize_LCD();
 			while(!kpend)
 			{
-				keys_pressed=read_keypad();
-				//cout<<"The following keys were pressed: "<<keys_pressed<<endl;
-				
-				if (keys_pressed[0]=='A')
-				{
-					write_to_LCD(lcd_w_lookup('+'),'1');
-				}
-				if (keys_pressed[0]=='B')
-				{
-					write_to_LCD(lcd_w_lookup('-'),'1');
-				}
-				if (keys_pressed[0]=='C')
-				{
-					initialize_LCD();
-				}
-				if (keys_pressed[0]=='D')
-				{
-					write_to_LCD(lcd_w_lookup('/'),'1');
-				}
-				else
-				{
-					lcd_data=lcd_w_lookup(keys_pressed[0]);	
-					write_to_LCD(lcd_data,'1');	
+				if(SW.getSwitch(1)){}
+					keys_pressed=read_keypad();
+					cout<<"The following keys were pressed: "<<keys_pressed<<endl;
+					
+					if (keys_pressed[0]=='A')
+					{
+						write_to_LCD(lcd_w_lookup('+'),'1');
+					}
+					if (keys_pressed[0]=='B')
+					{
+						write_to_LCD(lcd_w_lookup('-'),'1');
+					}
+					if (keys_pressed[0]=='C')
+					{
+						initialize_LCD();
+					}
+					if (keys_pressed[0]=='D')
+					{
+						write_to_LCD(lcd_w_lookup('/'),'1');
+					}
+					else
+					{
+						lcd_data=lcd_w_lookup(keys_pressed[0]);	
+						write_to_LCD(lcd_data,'1');	
+					}
 				}
 				if (SW.getSwitch(1))
 				{
 					kpend=1;
 				}
-				delay_ms(100);
 			}
 			lcd_read=read_from_LCD();
 			answer=te_interp(lcd_read.c_str(), 0);
@@ -327,7 +328,8 @@ string read_from_sram(string address)
 	return data;
 }
 
-string read_keypad(){
+string read_keypad()
+{
 	string row="";
 	string kp_Op="00000100";
 	string output="";
@@ -632,6 +634,7 @@ void write_to_LCD (string data, char rs)
 	cmd_w.setLow(); //cmd values latched
 
 	for(int i=0; i<5; i++) {tick();} //Toggle clock 4 times
+	lcd_data_length++;
 }
 
 //CMD Reg Pins (0-7): sel_sram, sel_lcd, sel_kp, r, w, lcd_rs, sel_spi_temp_sens_oe, NULL;
@@ -823,7 +826,7 @@ string rGPIO()
 void tick() //changed clock to go high
 {
 	clk.setHigh();
-	delay_ms(10);
+	delay_ms(2);
 	clk.setLow();
-	delay_ms(10);
+	delay_ms(2);
 }
