@@ -237,7 +237,7 @@ int main(void) {
 						write_to_LCD(lcd_data,'1');	
 					}
 				}
-				if (SW.getSwitch(1))
+				if (SW.getSwitch(4))
 				{
 					kpend=1;
 				}
