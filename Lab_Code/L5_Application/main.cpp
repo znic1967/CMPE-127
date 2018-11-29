@@ -204,6 +204,9 @@ int main(void) {
 			cout<<"Press button 1 on the SJOne board to calculate."<<endl;
 
 			string lcd_data="";
+			string lcd_read="";
+			string answer_str="";
+			double answer=0;
 
 			while(!kpend)
 			{
@@ -237,8 +240,11 @@ int main(void) {
 				}
 				delay_ms(100);
 			}
-			
-			
+			lcd_read=read_from_LCD();
+			answer=te_interp(lcd_read, 0);
+			answer_str=to_string(answer);
+			str_to_LCD("ANS "+answer_str);
+			cout<<"Answer: "+answer_str<<endl;
 		}
 		else cout<<"\n>>Choose the right selector"<<endl<<endl;
 	}
