@@ -244,10 +244,15 @@ int main(void) {
 					kpend=1;
 				}
 			}
+
 			lcd_read=read_from_LCD();
 			answer=te_interp(lcd_read.c_str(), 0);
-			answer_str=to_string(answer);
-			str_to_LCD("ANS "+answer_str);
+			
+			stringstream stream;
+			stream << fixed << setprecision(2) << answer;
+			answer_str s = stream.str();
+
+			str_to_LCD("ANS: "+answer_str);
 			cout<<"Answer: "+answer_str<<endl;
 		}
 		else cout<<"\n>>Choose the right selector"<<endl<<endl;
@@ -568,6 +573,10 @@ string lcd_w_lookup(char c)
 	      break;
 	    case('/'): return "00101111";
 	    	break;
+	    case('.'): return "00101110";
+      		break;
+      	case(':'): return "00111010";
+      		break;
 		default: return "00100000"; //space
 			break;
 	}
@@ -614,6 +623,8 @@ char lcd_r_lookup(string str)
 	if (str=="00101011") return '+';
   	if (str=="00101101") return '-';
   	if (str=="00101111") return '/';
+  	if (str=="00101110") return '.';
+  	if (str=="00111010") return ':';
 	else return ' ';
 }
 void write_to_LCD (string data, char rs)
