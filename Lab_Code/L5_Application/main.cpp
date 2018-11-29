@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 using namespace std;
 void write_to_sram(string address, string data);
@@ -247,7 +248,7 @@ int main(void) {
 
 			lcd_read=read_from_LCD();
 			answer=te_interp(lcd_read.c_str(), 0);
-			
+
 			stringstream stream;
 			stream << fixed << setprecision(2) << answer;
 			answer_str s = stream.str();
