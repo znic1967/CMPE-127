@@ -1,4 +1,5 @@
 #include "tasks.hpp"
+#include "tinyexpr.h"
 #include "utilities.h"
 #include "io.hpp"
 #include "gpio.hpp"
@@ -87,6 +88,7 @@ int main(void) {
 		cout<<"4) Write to LCD."<<endl;
 		cout<<"5) Read from LCD."<<endl;
 		cout<<"6) Read from Keypad, display on LCD."<<endl;
+		cout<<"7) Calculator"<<endl;
 		cout<<"Enter \"e\" to quit."<<endl;
 		cin>>selector;
 
@@ -194,6 +196,49 @@ int main(void) {
 					cout<<"Wrong number of bits."<<endl;
 				}
 			}	
+		}
+		if (selector =='6')
+		{
+			cout<<"Type math expression on keypad."<<endl;
+			cout<<"A: Add, B: Subtract, C: Clear, D: Divide"<<endl;
+			cout<<"Press button 1 on the SJOne board to calculate."<<endl;
+
+			string lcd_data="";
+
+			while(!kpend)
+			{
+				keys_pressed=read_keypad();
+				//cout<<"The following keys were pressed: "<<keys_pressed<<endl;
+				
+				if (keys_pressed[0]=='A')
+				{
+					write_to_LCD(lcd_w_lookup('+'));
+				}
+				if (keys_pressed[0]=='B')
+				{
+					write_to_LCD(lcd_w_lookup('-'));
+				}
+				if (keys_pressed[0]=='C')
+				{
+					initialize_LCD();
+				}
+				if (keys_pressed[0]=='D')
+				{
+					write_to_LCD(lcd_w_lookup('/'));
+				}
+				else
+				{
+					lcd_data=lcd_w_lookup(keys_pressed[0]);	
+					write_to_LCD(lcd_data,'1');	
+				}
+				if (SW.getSwitch(1))
+				{
+					kpend=1;
+				}
+				delay_ms(100);
+			}
+			
+			
 		}
 		else cout<<"\n>>Choose the right selector"<<endl<<endl;
 	}
@@ -506,6 +551,12 @@ string lcd_w_lookup(char c)
 			break;
 		case('#'): return "00100011";
 			break;
+	    case('+'): return "00101011";
+	      break;
+	    case('-'): return "00101101";
+	      break;
+	    case('/'): return "00101111";
+	    	break;
 		default: return "00100000"; //space
 			break;
 	}
@@ -549,6 +600,9 @@ char lcd_r_lookup(string str)
 	if (str=="01011000") return 'X';
 	if (str=="01011001") return 'Y';
 	if (str=="01011010") return 'Z';
+	if (str=="00101011") return '+';
+  	if (str=="00101101") return '-';
+  	if (str=="00101111") return '/';
 	else return ' ';
 }
 void write_to_LCD (string data, char rs)
